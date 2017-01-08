@@ -1,0 +1,24 @@
+@require(data)
+@require(test_info)
+@import "partials/diagram.html" as diagram
+@import "partials/header.html"  as header
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>My Page</title>
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    @include("partials/style.html")
+</head>
+<body style="width: 1000px;">
+    <article class="markdown-body" style="position: relative;">
+    @header.render(test_info, data)
+    @for d in data['diagrams'].keys():
+      @diagram.render(data['diagrams'][d])
+    @end
+    </article>
+</body>
+</html>

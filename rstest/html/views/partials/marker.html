@@ -1,0 +1,7 @@
+@def render(name, data):
+  <tr>
+    <td>@{name}</td>
+    <td>@{data['x']['value'], data['x']['units'] !! format_value}</td>
+    <td>@{data['y']['value'], data['y']['units'] !! format_value}</td>
+  </tr>
+@end

@@ -1,0 +1,15 @@
+@def render(diagram):
+  @import "partials/img.html"    as img
+  @import "partials/trace.html"  as trace
+  @import "partials/fail.html"   as fail
+  <div>
+    <h2 style="display: inline-block">@{diagram['title']}</h2>
+    @if 'limits' in diagram:
+      @fail.render(diagram['limits'] == 'failed')
+    @end
+  </div>
+  @img.render(diagram['screenshot'])
+  @for t_name in diagram['traces'].keys():
+    @trace.render(t_name, diagram['traces'][t_name])
+  @end
+@end

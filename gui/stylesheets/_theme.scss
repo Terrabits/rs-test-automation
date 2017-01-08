@@ -1,0 +1,173 @@
+
+
+$rs-blue: #009bea;
+$rs-dark-blue: darken($rs-blue, 10%);
+
+body {
+	padding-top:    100px;
+}
+
+
+// Sticky footer
+html {
+	position: relative;
+	min-height: 100%;
+}
+body {
+	margin-bottom: 80px;
+}
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	color: lighten(black, 50%);
+	background-color: lighten(black, 90%);
+}
+
+.margin-top {
+	margin-top: 10px;
+}
+.margin-bottom {
+	margin-bottom: 10px;
+}
+.extra-margin-bottom {
+	margin-bottom: 20px;
+}
+.no-margin-top {
+	margin-top: 0;
+}
+.no-margin-bottom {
+	margin-bottom: 0;
+}
+
+
+.no-border {
+	border: 0;
+}
+
+.shadow {
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, .75);
+}
+.no-shadow {
+	box-shadow: none;
+
+}
+
+.img-responsive {
+	width: 100%
+}
+
+a {
+	color: $rs-dark-blue;
+}
+
+.rs-blue {
+	color: $rs-dark-blue;
+}
+a.navbar-brand.rs-blue {
+	color: $rs-dark-blue;
+}
+
+.vertical-center {
+	display: flex;
+	align-items: center;
+}
+
+.navbar-brand {
+  @extend .vertical-center;
+  svg {
+  	width: 300px;
+  	display: inline-block;
+  }
+}
+
+.center {
+	text-align: center;
+}
+img.center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+span.gh-ico.center {
+	@extend img.center;
+}
+
+ul.list-style-none {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+ul.list-style-dash {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	li:before {
+		content: "- ";
+	}
+}
+
+// Right chevron list from glyphicons
+ul.list-right-chevron {
+	padding-left: 17px;
+	li {
+		display: block;
+	}
+	li:before {
+		content: "\e080";
+		font-family: "Glyphicons Halflings";
+		font-size: 9px;
+		float: left;
+		margin-top: 4px;
+		margin-left: -17px;
+		color: gray;
+	}
+}
+div.blog {
+		ul {
+			@extend ul.list-right-chevron;
+		}
+}
+
+span.github-span {
+	margin: 10px 0;
+}
+
+address {
+	font-family: $font-family-monospace;
+}
+
+div.blog {
+	img {
+		@extend .img-responsive;
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.tall-img {
+		width: auto;
+		max-height: 400px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	table {
+		@extend .table;
+		width: auto;
+	}
+	figure {
+		@extend p;
+		@extend .center;
+		figcaption {
+			@extend caption;
+			@extend .center;
+		}
+	}
+}
+
+// for electron
+div.row {
+	margin-bottom: 20px;
+}

@@ -1,0 +1,23 @@
+
+@def render(name, trace):
+  @import "partials/marker.html" as marker
+  @if 'markers' in trace and trace['markers']:
+    <table>
+      <thead>
+        <tr>
+          <th>@{name}</th>
+        </tr>
+        <tr>
+          <th>Marker</th>
+          <th>x</th>
+          <th>y</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for m in trace["markers"].keys():
+          @marker.render(m, trace["markers"][m])
+        @end
+      </tbody>
+    </table>
+  @end
+@end

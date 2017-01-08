@@ -1,0 +1,47 @@
+{
+  "name": "rs-test-automation",
+  "productName": "R&S Test Automation",
+  "description": "Performs all measurements and captures relevant diagrams and data",
+  "version": "0.1.0",
+  "author": "Nick Lalic",
+  "copyright": "© 2017, Rohde & Schwarz",
+  "homepage": "https://vna.rs-us.net",
+  "license": "Rohde & Schwarz Terms and Conditions for Royalty Free Products",
+  "repository": "https://github.com/Terrabits/rs-test-automation",
+  "keywords": [
+    "RF",
+    "Test",
+    "Measurement",
+    "Rohde",
+    "Rohde & Schwarz",
+    "R&S",
+    "VNA",
+    "Vector Network Analyzer",
+    "ZNB", "ZNBT"
+  ],
+  "main": "main.js",
+  "build": {
+    "appId": "rs.testautomation",
+    "asar": false,
+    "files": [
+      "app/**/*",
+      "node_modules/**/*",
+      "package.json",
+      "main.js",
+      "rstest.py"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^1.4.7",
+    "electron-builder": "^8.6.0",
+    "gulp": "^3.9.0"
+  },
+  "scripts": {
+    "asar": "asar",
+    "start": "electron .",
+    "build-py": "pyinstaller run.spec --distpath=\"app\"",
+    "build-mm": "middleman build --no-clean",
+    "pack": "build --dir",
+    "dist": "build"
+  }
+}

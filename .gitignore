@@ -22,10 +22,10 @@ node_modules/
 
 # test build, dist artifacts
 build/
+app/
 dist/
 *.dmg
 *.app
-test_html.html
 
 # Python
 *.pyc

@@ -133,7 +133,6 @@ def main():
 			message = "Cable {0}"
 			message = message.format(result['limits'].upper())
 			print(message)
-			print("Cable passed")
 			print("------------\n")
 			print()
 

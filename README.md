@@ -16,8 +16,6 @@ Screenshots
 
 ![Results](docs/screenshots/bordered/4_results.png)
 
-![Files](docs/screenshots/5_files.png)
-
 ### In command-line mode
 
 ![Command line](docs/screenshots/command_line.png)
@@ -26,6 +24,8 @@ Results
 -------
 
 Test data can be found in the `~/Documents/TestAutomation` folder, organized by serial number.
+
+![Files](docs/screenshots/5_files.png)
 
 Saved data includes:
 

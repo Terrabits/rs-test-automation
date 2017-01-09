@@ -20,6 +20,18 @@ Screenshots
 
 ![Command line](docs/screenshots/command_line.png)
 
+Skew and Propagation Delay
+--------------------------
+
+Skew and propagation delay calculations are triggered off diagram keywords.
+
+The script searches for the following phrases (case insensitive) in the title:
+
+- `skew`
+- `prop delay`
+- `prop. delay`
+- `propagation delay`
+
 Results
 -------
 

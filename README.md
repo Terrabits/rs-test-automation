@@ -55,7 +55,7 @@ Saved data includes:
 Binary Installers
 -----------------
 
-Installers can be found for Windows x64 and MacOS 10.12 or later [here](https://vna.rs-us.net).
+Installers can be found for Windows x64 and MacOS 10.12 or later [here](https://vna.rs-us.net/applications/test_automation.html).
 
 Building from source
 --------------------

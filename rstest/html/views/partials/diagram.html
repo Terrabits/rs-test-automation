@@ -1,7 +1,10 @@
 @def render(diagram):
-  @import "partials/img.html"    as img
-  @import "partials/trace.html"  as trace
-  @import "partials/fail.html"   as fail
+  @import "partials/img.html"   as img
+  @import "partials/trace.html" as trace
+  @import "partials/fail.html"  as fail
+  @import "partials/skew.html"  as skew
+  @import "partials/prop_delay.html" as prop_delay
+
   <div>
     <h2 style="display: inline-block">@{diagram['title']}</h2>
     @if 'limits' in diagram:
@@ -9,6 +12,12 @@
     @end
   </div>
   @img.render(diagram['screenshot'])
+  @if 'skew' in diagram:
+    @skew.render(diagram['skew'])
+  @end
+  @if 'prop delay' in diagram:
+    @prop_delay.render(diagram['prop delay'])
+  @end
   @for t_name in diagram['traces'].keys():
     @trace.render(t_name, diagram['traces'][t_name])
   @end

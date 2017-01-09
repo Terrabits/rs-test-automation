@@ -20,17 +20,18 @@ def connect_to_vna(address):
 	try:
 		vna.open_tcp(address)
 	except:
-		print("Problem connecting to VNA.")
+		print("\n\n* Error!\n*  Problem connecting to VNA at ip {0}".format(address))
 		return None
 	try:
 		if not vna.connected():
-			print("Problem connecting to VNA.")
+			print("\n\n* Error!\n*  Problem connecting to VNA at ip {0}".format(address))
 			return None
 		if not vna.properties.is_known_model():
-			print("Could not find R&S Vna");
+			print("\n\n* Error!\n*  Could not find R&S VNA at ip {0}".format(address))
+			print("*   *IDN? response: {0}".format(vna.id_string()))
 			return None;
 	except:
-		print("Problem connecting to VNA.")
+		print("\n\n* Error!\n*  Problem connecting to VNA at ip {0}".format(address))
 		return None
 	# set long timeout,
 	vna.timeout_ms = 60000

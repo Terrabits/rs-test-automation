@@ -18,7 +18,6 @@ function connectClosed(code) {
 		controls.showMeasure();
 	}
 	else {
-		div_console.print(`child process exited with code ${code}`);
 		controls.enableConnect();
 		// Display warning!
 	}

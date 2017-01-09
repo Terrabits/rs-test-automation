@@ -43,9 +43,7 @@ Saved data includes:
 Binary Installers
 -----------------
 
-[For Windows x64]()
-
-For MacOS (10.12 or later)
+Installers can be found for Windows x64 and MacOS 10.12 or later [here](https://vna.rs-us.net).
 
 Building from source
 --------------------

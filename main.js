@@ -26,7 +26,6 @@ mainWindow.setMenu(null)
   }))
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools({'mode': 'bottom'})
   if (process.argv.length >= 2 && process.argv[1] == "--dev") {
     mainWindow.webContents.openDevTools({'mode': 'bottom'})
 }

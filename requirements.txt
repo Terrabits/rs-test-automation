@@ -1,5 +1,5 @@
 # Requirements:
-rohdeschwarz    >=0.6.8dev1
+rohdeschwarz    >=0.7.0dev1
 ddt             >=1.1.1
 wheezy.template >=0.1.167
 pyinstaller     >=3.2

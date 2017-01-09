@@ -1,23 +1,54 @@
 R&S Test Automation
 ===================
 
-Connects to a Rohde & Schwarz Vector Network Analyzer (VNA), runs all sweeps, then saves the following data:
+Connects to a Rohde & Schwarz Vector Network Analyzer (VNA), runs all sweeps, then saves all relevant data.
 
-- Screenshot
-- Touchstone files
-- Global pass/fail
+Screenshots
+-----------
+
+### In GUI mode
+
+![Start application](docs/screenshots/1_start.png)
+![Connect to instrument](docs/screenshots/2_connected.png)
+![Measure](docs/screenshots/3_measuring.png)
+![Results](docs/screenshots/4_results.png)
+![Files](docs/screenshots/5_files.png)
+
+### In command-line mode
+
+![Command line](docs/screenshots/command_line.png)
+
+Results
+-------
+
+Test data can be found in the `~/Documents/TestAutomation` folder, organized by serial number.
+
+Saved data includes:
+
+- Overall screenshot
+- Touchstone files (1 per channel, ports used in trace)
+- Global pass/fail (json)
+- Per diagram pass/fail
 - Diagram images
-- trace data (csv)
-- marker positions and values
-- skew, propagation delay (if indicated)
-- Diagram pass/fail
+- Trace data (csv)
+- Marker positions and values (json)
+- Skew, propagation delay (if indicated, json)
+- Summary report (html)
+- SCPI command log (for debugging)
 
-Data is saved to the `~/Documents/TestAutomation` folder, organized by DUT serial number. The data for each dut is organized by diagram (test).
+Binary Installers
+-----------------
 
-Requirements
-------------
+[For Windows x64]()
 
-- Python 3.x
+For MacOS (10.12 or later)
+
+Building from source
+--------------------
+
+### Requirements
+
+- Python 3.5+
 - Node 6.9+
 - Ruby 2.2+
 - Bundler Ruby gem
@@ -34,32 +65,31 @@ The python [rohdeschwarz](https://github.com/Terrabits/rohdeschwarz) package is 
 
 [electron-builder](https://github.com/electron-userland/electron-builder) is used to create a distributable / installer.
 
-Installation
-------------
+### Install
 
-Assuming Python, Node and Ruby are installed, you can get setup by typing:
+Assuming Python 3.5+, Node 6.9+ and Ruby 2.2+ are installed, you can get setup from the command line with:
 
 ```bash
 cd path/to/project
 pip install -r requirements.txt
 npm install
+gem install bundler
 bundle install
 ```
 
-Development
------------
+### npm tasks
 
 The following scripts are available from the command line:
 
-### Build `gui` source with Middleman
+#### Build `gui` source with Middleman
 
 `npm run build-mm`
 
-### Build python code with pyinstaller
+#### Build python code with pyinstaller
 
 `npm run build-py`
 
-### Pack and distribute
+#### Pack and distribute
 
 The following commands assume the python and gui sources have been built successfully.
 
@@ -73,8 +103,7 @@ To create a distributable installer:
 
 See the [electron-builder](https://github.com/electron-userland/electron-builder) project for more details on how the installer is generated.
 
-From the command line
----------------------
+#### From the command line
 
 If you'd prefer, you can separate out the user interface (node, electron, ruby, middleman) and stick to python and the command line. In that case, you only need the following sources:
 
@@ -86,21 +115,20 @@ If you'd prefer, you can separate out the user interface (node, electron, ruby, 
 
 The `run.py` script has the following modes of operation:
 
-### With no args
+##### With no args
 
-The script will ask you for the VNA ip address, then ask you for the serial number of your first DUT. After each measurement you will be prompted to continue (measure next DUT) or quit.
+`run.py`
 
-### Test VNA connection
+The script will measure repeatedly, based on user input. See the command line screenshot above.
 
-If you execute the run.py script with the IP address as a command line argument, the script will attempt to connect to the VNA and report back whether or not it could connect and what it connected to.
+##### Test VNA connection
 
-### Measure one DUT
+`run.py <ip address>`
 
-With the following command line structure the script will measure a single DUT then return:
+If you execute the run.py script with the IP address as a command line argument, the script will attempt to connect to the VNA and report back whether or not it could connect. If connected, you will get a printout with instrument information.
 
-`run.py <ip address> <serial number>`
+##### Measure one DUT
 
-Results
--------
+`run.py <ip address> <serial no>`
 
-Test results can be found in the `~/Documents/TestAutomation` folder.
+With this command line structure the script will measure a single DUT then exit.

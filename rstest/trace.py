@@ -14,7 +14,7 @@ def process_trace(path, trace):
         trace.save_data_locally(str(path / safe_name))
     else:
         trace.save_complex_data_locally(str(path / safe_name))
-    print("{0}.csv".format(safe_name), flush=True)
+    print("{0}.csv".format(safe_name))
 
     if trace.limits.on:
         if trace.limits.passed:

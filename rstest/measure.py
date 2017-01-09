@@ -39,12 +39,12 @@ def measure(path, vna, test_info = {}):
 
     # summary
     # csv and human readable
-    print("data.json", flush=True)
+    print("data.json")
     with open(str(path / 'data.json'), 'w') as f:
         json.dump(data, f)
-    print('test_info.json', flush=True)
+    print('test_info.json')
     with open(str(path / 'test_info.json'), 'w') as f:
         json.dump(test_info, f)
-    print("summary.html", flush=True)
+    print("summary.html")
     generate_html(str(path / 'summary.html'), test_info, data)
     return data

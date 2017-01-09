@@ -89,8 +89,8 @@ def main():
 	print("===================\n")
 
 	# Connect to VNA
-	address = str(input("Enter the IP Address: "))
-	print()
+	address = str(raw_input("Enter the IP Address: "))
+	print("")
 	vna = connect_to_vna(address)
 	if not vna:
 		sys.exit(0)
@@ -123,8 +123,8 @@ def main():
 	while not response in ("n", "no", "q", "quit", "exit"):
 
 		# serial Number
-		serial_number = str(input("Please enter the device ID/Serial No: "))
-		print()
+		serial_number = str(raw_input("Please enter the device ID/Serial No: "))
+		print("")
 
 		result = process_cable(address, serial_number)
 		if not result:
@@ -134,11 +134,11 @@ def main():
 			message = message.format(result['limits'].upper())
 			print(message)
 			print("------------\n")
-			print()
+			print("")
 
 		# break?
-		print()
-		response = str(input("Measure another cable? (Y/n): "))
+		print("")
+		response = str(raw_input("Measure another cable? (Y/n): "))
 		response = response.lower()
 		# end while
 

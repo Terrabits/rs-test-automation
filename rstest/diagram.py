@@ -68,7 +68,7 @@ def process_diagram(path, diagram):
         os.makedirs(str(path))
 
     filename = safe_title + ".png"
-    print(filename, flush=True)
+    print(filename)
     diagram.save_screenshot_locally(str(path / filename), "PNG")
 
     # Read screenshot

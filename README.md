@@ -8,13 +8,13 @@ Screenshots
 
 ### In GUI mode
 
-![Start application](docs/screenshots/1_start.png)
+![Start application](docs/screenshots/bordered/1_start.png)
 
-![Connect to instrument](docs/screenshots/2_connected.png)
+![Connect to instrument](docs/screenshots/bordered/2_connected.png)
 
-![Measure](docs/screenshots/3_measuring.png)
+![Measure](docs/screenshots/bordered/3_measuring.png)
 
-![Results](docs/screenshots/4_results.png)
+![Results](docs/screenshots/bordered/4_results.png)
 
 ![Files](docs/screenshots/5_files.png)
 

@@ -1,6 +1,12 @@
+// Init
+if (config.has('ip-address')) {
+	controls.setIpAddress(config.get('ip-address'));
+}
+
 function connect() {
 	controls.disableConnect();
 	results.hide();
+	controls.hideAlert();
 	div_console.clear();
 	div_console.show();
 
@@ -16,10 +22,12 @@ function connectClosed(code) {
 	if (code == 0) {
 		controls.enableMeasure();
 		controls.showMeasure();
+		config.set('ip-address', controls.ipAddress());
 	}
 	else {
 		controls.enableConnect();
-		// Display warning!
+		controls.setAlert("Error connecting to VNA");
+		controls.showAlert();
 	}
 }
 $('#connect').on('click', connect);

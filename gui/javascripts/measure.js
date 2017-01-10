@@ -2,7 +2,6 @@
 
 var _stderr_read = '';
 function readStderr(data) {
-  console.log("stderr: #{data}");
   _stderr_read = _stderr_read + data;
 }
 
@@ -10,6 +9,7 @@ var _process;
 function measure() {
   controls.disableMeasure();
   results.hide();
+  controls.hideAlert();
   div_console.clear();
   div_console.show();
 
@@ -34,6 +34,8 @@ function measureClosed(code) {
     results.show();
   }
   else {
+    controls.setAlert("Measurement error. See console below for more details.");
+    controls.showAlert();
     div_console.printAndScroll("\n* ERROR!\n")
     div_console.printAndScroll("*   An error occurred and the measurement exited prematurely.\n");
     div_console.printAndScroll("*   Please check your setup and try again.");
@@ -43,10 +45,11 @@ function measureClosed(code) {
   }
 }
 function disconnect() {
-  controls.enableConnect();
-  controls.showConnect()
+  controls.hideAlert();
   results.hide()
   div_console.hide()
+  controls.enableConnect();
+  controls.showConnect()
 }
 $('#measure').on('click', measure);
 $('#disconnect').on('click', disconnect)

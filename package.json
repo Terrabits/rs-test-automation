@@ -6,7 +6,7 @@
   "author": "Nick Lalic",
   "copyright": "© 2017, Rohde & Schwarz",
   "homepage": "https://vna.rs-us.net",
-  "license": "Rohde & Schwarz Terms and Conditions for Royalty Free Products",
+  "license": "SEE LICENSE IN license.txt",
   "repository": "https://github.com/Terrabits/rs-test-automation",
   "keywords": [
     "RF",
@@ -34,7 +34,8 @@
   "devDependencies": {
     "electron": "^1.4.7",
     "electron-builder": "^8.6.0",
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "electron-config": ">=0.2.1"
   },
   "scripts": {
     "asar": "asar",

@@ -4,6 +4,9 @@ function clearAddress() {
 function ipAddress() {
   return document.getElementById('ip-address').value;
 }
+function setIpAddress(address) {
+  document.getElementById('ip-address').value = address;
+}
 function showConnect() {
   $('#connect-controls').removeClass('hide');
   $('#measure-controls').addClass('hide');
@@ -38,9 +41,20 @@ function enableMeasure() {
   $('#disconnect').removeAttr('disabled');
 }
 
+function showAlert() {
+  $('.alert').removeClass('invisible');
+}
+function setAlert(message) {
+  $('.alert').text(message);
+}
+function hideAlert() {
+  $('.alert').addClass('invisible');
+}
+
 module.exports = {
   clearAddress: clearAddress,
   ipAddress: ipAddress,
+  setIpAddress: setIpAddress,
   showConnect: showConnect,
   enableConnect: enableConnect,
   disableConnect: disableConnect,
@@ -48,5 +62,8 @@ module.exports = {
   serialNumber: serialNumber,
   showMeasure: showMeasure,
   enableMeasure: enableMeasure,
-  disableMeasure: disableMeasure
+  disableMeasure: disableMeasure,
+  showAlert: showAlert,
+  setAlert: setAlert,
+  hideAlert: hideAlert
 }

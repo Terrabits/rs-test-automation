@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 
-# This script relies on xcode command line tools.
-# You can install them by typing the following into a prompt
-# and following the directions:
-#   xcode-select --install
+# This provisioning script should work
+# on most linux distros.
+# It has been tested with on a raspberry
+# pi 3 running 2017-01-11-raspbian-jessie.
+
+# Update apt-get package list
+sudo apt-get update
 
 # Install pyenv
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils
 curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
-echo "export PATH=\"~/.pyenv/bin:\$PATH\"" >> ~/.bash_profile
-echo "eval \"\$(pyenv init -)\"" >> ~/.bash_profile
-echo "eval \"\$(pyenv virtualenv-init -)\"" >> ~/.bash_profile
+echo "export PATH=\"~/.pyenv/bin:\$PATH\"" >> ~/.bashrc
+echo "eval \"\$(pyenv init -)\"" >> ~/.bashrc
+echo "eval \"\$(pyenv virtualenv-init -)\"" >> ~/.bashrc
 pyenv update
 
 # Install python, create virtualenv
@@ -18,34 +22,14 @@ pyenv virtualenv 3.5.1 3.5.1@test_automation
 pyenv shell 3.5.1@test_automation
 pip install --upgrade pip
 
-# Clone project
+# Clone, install rs-test-automation
 cd ~/Documents
 mkdir Python
 cd Python
 git clone https://github.com/Terrabits/rs-test-automation.git
 cd rs-test-automation
-
-# Install python packages
 pip install -r requirements.txt
 # Note: numpy can take a while to build. Be patient...
-
-# Install rvm
-# ...
-
-# Install ruby, create gem environment
-# ...
-
-# Install ruby gems
-# ...
-
-# Install nvm
-# ...
-
-# Install Node
-# ...
-
-# Install packages
-# ...
 
 # Update rs-test-automation
 #   git pull

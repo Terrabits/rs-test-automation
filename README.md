@@ -113,7 +113,7 @@ To pack files into a single folder (`dist/*-unpacked`):
 
 To create a distributable installer:
 
-`npm dist`
+`npm run dist`
 
 See the [electron-builder](https://github.com/electron-userland/electron-builder) project for more details on how the installer is generated.
 

@@ -31,11 +31,13 @@
       "rstest.py"
     ]
   },
+  "dependencies": {
+    "electron-config": ">=0.2.1"
+  },
   "devDependencies": {
     "electron": "^1.4.7",
     "electron-builder": "^8.6.0",
-    "gulp": "^3.9.0",
-    "electron-config": ">=0.2.1"
+    "gulp": "^3.9.0"
   },
   "scripts": {
     "asar": "asar",

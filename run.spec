@@ -5,7 +5,7 @@ block_cipher = None
 data_files = [('rstest/html/views', 'rstest/html/views')]
 
 a = Analysis(['run.py'],
-             pathex=['C:/Users/LALIC/Documents/Node/test-automation'],
+             pathex=['~/Documents/Python/rs-test-automation'],
              binaries=None,
              datas=data_files,
              hiddenimports=[],

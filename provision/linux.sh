@@ -26,11 +26,11 @@ pyenv shell 3.5.1@test_automation
 pip install --upgrade pip
 
 # Clone
-cd ~/Documents
-mkdir Python
-cd Python
-git clone https://github.com/Terrabits/rs-test-automation.git
-cd rs-test-automation
+# cd ~/Documents
+# mkdir Python
+# cd Python
+# git clone https://github.com/Terrabits/rs-test-automation.git
+# cd rs-test-automation
 
 # Install python packages
 pip install -r requirements.txt

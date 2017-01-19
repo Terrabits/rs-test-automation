@@ -19,8 +19,12 @@ echo "eval \"\$(pyenv init -)\"" >> ~/.bashrc
 echo "eval \"\$(pyenv virtualenv-init -)\"" >> ~/.bashrc
 pyenv update
 
-# Install python, create virtualenv
-env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.5.1 --verbose
+# Install python
+PYTHON_CONFIGURE_OPTS="--enable-shared"
+pyenv install 3.5.1 --verbose
+unset PYTHON_CONFIGURE_OPTS
+
+# Create virtualenv
 pyenv virtualenv 3.5.1 3.5.1@test_automation
 pyenv shell 3.5.1@test_automation
 pip install --upgrade pip
@@ -33,6 +37,7 @@ pip install --upgrade pip
 # cd rs-test-automation
 
 # Install python packages
+cd ~/Documents/Python/rs-test-automation
 pip install -r requirements.txt
 # Note: numpy can take a while to build. Be patient...
 

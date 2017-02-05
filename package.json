@@ -1,6 +1,6 @@
 {
   "name": "rs-test-automation",
-  "productName": "R&S Test Automation",
+  "productName": "R&S Test Automation SNP ONLY",
   "description": "Performs all measurements and captures relevant diagrams and data",
   "version": "0.1.0",
   "author": "Nick Lalic",

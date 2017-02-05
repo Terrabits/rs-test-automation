@@ -2,8 +2,8 @@ from collections  import OrderedDict
 from rstest.general import touch
 
 def process_vna(path, vna):
-    print("screenshot.png", flush=True)
-    vna.save_screenshot_locally(str(path / 'screenshot'), "PNG")
+    # print("screenshot.png", flush=True)
+    # vna.save_screenshot_locally(str(path / 'screenshot'), "PNG")
     data = OrderedDict()
     if vna.is_limits():
         if vna.passed:

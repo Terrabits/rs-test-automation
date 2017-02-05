@@ -67,14 +67,16 @@ def process_diagram(path, diagram):
     if not os.path.exists(str(path)):
         os.makedirs(str(path))
 
-    filename = safe_title + ".png"
-    print(filename, flush=True)
-    diagram.save_screenshot_locally(str(path / filename), "PNG")
+    # filename = safe_title + ".png"
+    # print(filename, flush=True)
+    # diagram.save_screenshot_locally(str(path / filename), "PNG")
+
+    print(safe_title, flush=True)
 
     # Read screenshot
     data = OrderedDict()
-    with open(str(path / filename), 'rb') as f:
-        data['screenshot'] = base64.b64encode(f.read()).decode()
+    # with open(str(path / filename), 'rb') as f:
+    #     data['screenshot'] = base64.b64encode(f.read()).decode()
 
     # title
     data["title"] = title

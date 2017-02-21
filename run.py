@@ -9,7 +9,7 @@ import rstest
 from   rstest.general import get_root_path
 from   rstest.measure import measure
 
-# stdlib
+# python
 from   collections    import OrderedDict
 import os
 from   pathlib        import Path
@@ -43,7 +43,7 @@ def print_vna_info(vna):
 	vna.print_info()
 	vna.log = log
 
-def process_cable(address, serial_number):
+def process_dut(address, serial_number):
 	# Connect to VNA
 	vna = connect_to_vna(address)
 	if not vna:
@@ -56,7 +56,7 @@ def process_cable(address, serial_number):
 		os.makedirs( str(dut_path))
 
 	vna.open_log(str(dut_path / "SCPI Log.txt"))
-	print_header(vna.log, "R&S USB-C Cable Test Automation", rstest.version)
+	print_header(vna.log, "R&S Test Automation", rstest.version)
 	vna.print_info()
 	vna.is_error()
 	vna.clear_status()
@@ -117,7 +117,7 @@ def main():
 	vna.close()
 	vna.close_log()
 
-	# Measure cables until user
+	# Measure DUTs until user
 	# says stop
 	response = None
 	while not response in ("n", "no", "q", "quit", "exit"):
@@ -126,11 +126,11 @@ def main():
 		serial_number = str(input("Please enter the device ID/Serial No: "))
 		print()
 
-		result = process_cable(address, serial_number)
+		result = process_dut(address, serial_number)
 		if not result:
 			sys.exit(0)
 		elif 'limits' in result:
-			message = "Cable {0}"
+			message = "DUT {0}"
 			message = message.format(result['limits'].upper())
 			print(message)
 			print("------------\n")
@@ -138,7 +138,7 @@ def main():
 
 		# break?
 		print()
-		response = str(input("Measure another cable? (Y/n): "))
+		response = str(input("Measure another DUT? (Y/n): "))
 		response = response.lower()
 		# end while
 
@@ -158,7 +158,7 @@ if __name__ == "__main__":
 	elif argc == 3: # run single measurement
 		address       = sys.argv[1]
 		serial_number = sys.argv[2]
-		result = process_cable(address, serial_number)
+		result = process_dut(address, serial_number)
 		if not result:
 			sys.exit(1)
 		sys.exit(0)

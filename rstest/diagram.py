@@ -60,23 +60,20 @@ def process_diagram(path, diagram):
     title = diagram.title
     if not title:
         title = "Diagram {0}".format(diagram.index)
-    safe_title = make_path_safe(title)
 
-    # Path
-    path = path / safe_title
-    if not os.path.exists(str(path)):
-        os.makedirs(str(path))
-
-    filename = safe_title + ".png"
-    print(filename, flush=True)
-    diagram.save_screenshot_locally(str(path / filename), "PNG")
+    # Save screenshot
+    path.cd_diagram(title)
+    path.mkdirs()
+    filename = path.file_path(title, ".png")
+    print(title, flush=True)
+    diagram.save_screenshot_locally(filename, "PNG")
 
     # Read screenshot
     data = OrderedDict()
-    with open(str(path / filename), 'rb') as f:
+    with open(filename, 'rb') as f:
         data['screenshot'] = base64.b64encode(f.read()).decode()
 
-    # title
+    # Pass/fail
     data["title"] = title
     if diagram.is_limits():
         if diagram.passed:
@@ -90,6 +87,7 @@ def process_diagram(path, diagram):
     if is_prop_delay(title):
         data["prop delay"] = delta_50pct(diagram)
 
+    # Process traces
     data['traces'] = OrderedDict()
     for i in diagram.traces:
         trace      = diagram._vna.trace(i)

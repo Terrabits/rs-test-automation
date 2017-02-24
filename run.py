@@ -6,13 +6,12 @@ from rohdeschwarz.general         import print_header
 
 # rstest
 import rstest
-from   rstest.general import get_root_path
-from   rstest.measure import measure
+from   rstest.general  import get_root_path
+from   rstest.measure  import measure
+from   rstest.savepath import SavePath
+import rstest.temp
 
 # python
-from   collections    import OrderedDict
-import os
-from   pathlib        import Path
 import sys
 
 def connect_to_vna(address):
@@ -43,38 +42,27 @@ def print_vna_info(vna):
 	vna.print_info()
 	vna.log = log
 
-def process_dut(address, serial_number):
+def process_dut(serial_no, settings):
 	# Connect to VNA
-	vna = connect_to_vna(address)
+	vna = connect_to_vna(settings['instrument']["address"])
 	if not vna:
 		return None
 
-	# create dut path
-	path     = get_root_path()
-	dut_path = path / serial_number
-	if not os.path.exists( str(dut_path)):
-		os.makedirs( str(dut_path))
+	# Save path
+	save_path = SavePath(settings["save"]["directory"], serial_no, not settings['save']['organize by file'])
+	save_path.mkdirs()
 
-	vna.open_log(str(dut_path / "SCPI Log.txt"))
+	# Create scpi log
+	save_path.cd_scpi()
+	save_path.mkdirs()
+	vna.open_log(save_path.file_path("SCPI Log", ".txt"))
 	print_header(vna.log, "R&S Test Automation", rstest.version)
 	vna.print_info()
 	vna.is_error()
 	vna.clear_status()
 
-	# root path
-	root = None
-	if getattr(sys, 'frozen', False):
-		root = os.path.dirname(sys.executable)
-	elif __file__:
-		root = os.path.dirname(__file__)
-
-	# test info
-	test_info = OrderedDict()
-	test_info["dut noun"] = "DUT"
-	test_info["serial number"] = serial_number
-
 	# run measurement
-	result = measure(dut_path, vna, test_info)
+	result = measure(vna, serial_no, settings)
 
 	# check for errors,
 	# close log
@@ -88,29 +76,29 @@ def main():
 	print("R&S Test Automation")
 	print("===================\n")
 
+	# For now...
+	settings = rstest.temp.settings
+
 	# Connect to VNA
-	address = str(input("Enter the IP Address: "))
+	settings["instrument"]["address"] = str(input("Enter the IP Address: "))
 	print()
-	vna = connect_to_vna(address)
+	vna = connect_to_vna(settings['instrument']['address'])
 	if not vna:
 		sys.exit(0)
 
-	# Create measurement folder
-	path    = get_root_path()
-	if not os.path.exists( str(path)):
-			os.makedirs( str(path))
+	# Save path
+	save_path = SavePath(settings["save"]["directory"], '')
+	save_path.mkdirs()
 
-	# Log vna info
-	vna.open_log(str(path / 'SCPI Log.txt'))
+	# Create scpi log
+	vna.open_log(save_path.file_path("SCPI Log.txt"))
 	print_header(vna.log, "R&S Test Automation", rstest.version)
 	vna.print_info()
+	vna.is_error()
+	vna.clear_status()
 
 	print("Rohde & Schwarz {0} {1}-port\n".format(vna.properties.model, vna.properties.physical_ports))
 	print("-------------------\n")
-
-	# Clear previous errors
-	vna.is_error()
-	vna.clear_status()
 
 	# Close vna connection
 	vna.local()
@@ -126,7 +114,7 @@ def main():
 		serial_number = str(input("Please enter the device ID/Serial No: "))
 		print()
 
-		result = process_dut(address, serial_number)
+		result = process_dut(serial_number, settings)
 		if not result:
 			sys.exit(0)
 		elif 'limits' in result:
@@ -156,9 +144,10 @@ if __name__ == "__main__":
 		vna.close()
 		sys.exit(0)
 	elif argc == 3: # run single measurement
-		address       = sys.argv[1]
-		serial_number = sys.argv[2]
-		result = process_dut(address, serial_number)
+		settings = rstest.temp.settings
+		settings['instrument']['address'] = sys.argv[1]
+		serial_number                     = sys.argv[2]
+		result = process_dut(serial_number, settings)
 		if not result:
 			sys.exit(1)
 		sys.exit(0)

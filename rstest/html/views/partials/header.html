@@ -1,15 +1,15 @@
 
-@def render(test_info, data):
+@def render(serial_no, noun, data):
   @import "partials/logo.html" as logo
   @import "partials/fail.html" as fail
   <div style="position: absolute; top: -30px; left: -30px; width: 130%; height: 145px; border: 0; background-color: #ddd; z-index: -1;">
   </div>
   <div style="margin-bottom: 20px;">
     @logo.render()
-    @if 'serial number' in test_info:
-      <h1 style="display: inline-block; margin-top: auto; margin-bottom: auto; border: 0;">Results for @{test_info['dut noun']} @{test_info['serial number']}</h1>
+    @if serial_no:
+      <h1 style="display: inline-block; margin-top: auto; margin-bottom: auto; border: 0;">Results for @{noun} @{serial_no}</h1>
     @else:
-      <h1 style="display: inline-block; margin-top: auto; margin-bottom: auto; border: 0;">USB-C Cable</h1>
+      <h1 style="display: inline-block; margin-top: auto; margin-bottom: auto; border: 0;">Results for @{noun}</h1>
     @end
     @if 'limits' in data:
       @fail.render(data['limits'] == 'failed')

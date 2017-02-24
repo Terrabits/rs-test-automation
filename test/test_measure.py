@@ -4,7 +4,7 @@ from   rohdeschwarz.instruments.vna import Vna
 import os
 import unittest
 
-class TestDiagram(unittest.TestCase):
+class TestMeasure(unittest.TestCase):
 	def setUp(self):
 		path = rstest.general.get_root_path() / "test_measure"
 		if not os.path.exists(str(path)):

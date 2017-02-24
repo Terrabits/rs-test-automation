@@ -1,3 +1,4 @@
+import datetime
 import os
 from   pathlib import Path
 import re
@@ -11,8 +12,7 @@ def get_root_path():
     return root_path
 
 def make_path_safe(s):
-    re.sub('[/\\\\:\\*\\?"<>|]', '~', s)
-    return s.replace("/", "~")
+    return re.sub('[/\\\\:\\*\\?"<>|]', '~', s)
 
 def get_ports(vna, channel):
     result = []
@@ -27,3 +27,6 @@ def get_ports(vna, channel):
 def touch(filename):
     with open(filename, 'a'):
         os.utime(filename, None)
+
+def timestamp():
+    return datetime.datetime.now().strftime("%Y%m%d_%H%M%S")

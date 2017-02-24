@@ -27,7 +27,8 @@ function measureClosed(code) {
   if (code == 0) {
     div_console.hide();
 
-    var url = path.resolve(os.homedir(), 'Documents', 'TestAutomation', controls.serialNumber(), 'summary.html');
+    var filename = controls.serialNumber() + ".html"
+    var url      = path.resolve(os.homedir(), 'Documents', 'TestAutomation', 'summary', filename);
     controls.clearSerialNumber();
 
     results.setUrl(url);

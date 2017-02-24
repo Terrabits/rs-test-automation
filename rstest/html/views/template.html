@@ -1,5 +1,6 @@
 @require(data)
-@require(test_info)
+@require(serial_no)
+@require(noun)
 @import "partials/diagram.html" as diagram
 @import "partials/header.html"  as header
 
@@ -15,7 +16,7 @@
 </head>
 <body style="width: 1000px;">
     <article class="markdown-body" style="position: relative;">
-    @header.render(test_info, data)
+    @header.render(serial_no, noun, data)
     @for d in data['diagrams'].keys():
       @diagram.render(data['diagrams'][d])
     @end

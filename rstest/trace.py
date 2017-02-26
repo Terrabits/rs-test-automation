@@ -2,19 +2,21 @@ import os
 from   collections  import OrderedDict
 from   rstest.general import make_path_safe
 
-def process_trace(path, trace):
+def process_trace(path, trace, settings):
     trc_name = trace.name
 
+    # Data (csv) files
     data = OrderedDict()
     path.cd_trace(trc_name)
-    path.mkdirs()
-    filename = path.file_path(trc_name, '.csv')
-    if trace.time_domain.on:
-        data["time domain"] = True
-        trace.save_data_locally(filename)
-    else:
-        trace.save_complex_data_locally(filename)
-    print("{0}.csv".format(trc_name), flush=True)
+    if not settings['save']['disable trace csv files']:
+        path.mkdirs()
+        filename = path.file_path(trc_name, '.csv')
+        if trace.time_domain.on:
+            data["time domain"] = True
+            trace.save_data_locally(filename)
+        else:
+            trace.save_complex_data_locally(filename)
+        print("{0}.csv".format(trc_name), flush=True)
 
     if trace.limits.on:
         if trace.limits.passed:

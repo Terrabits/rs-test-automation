@@ -47,6 +47,8 @@ class SavePath:
         if not self.by_serial_no:
             self.cd('traces')
         self.cd(self.diagram)
+        if not self.by_serial_no:
+            self.cd(name)
     def cd_summary(self):
         self.reset()
         if not self.by_serial_no:
@@ -55,7 +57,7 @@ class SavePath:
         self.reset()
         if not self.by_serial_no:
             self.cd('json')
-    def file_path(self, filename=None, extension=None):
+    def file_path(self, filename='', extension=''):
         if self.by_serial_no:
             filename += extension
         else:

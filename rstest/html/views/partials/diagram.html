@@ -11,7 +11,9 @@
       @fail.render(diagram['limits'] == 'failed')
     @end
   </div>
-  @img.render(diagram['screenshot'])
+  @if 'screenshot' in diagram:
+    @img.render(diagram['screenshot'])
+  @end
   @if 'skew' in diagram:
     @skew.render(diagram['skew'])
   @end

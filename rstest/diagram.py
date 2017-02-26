@@ -55,23 +55,22 @@ def delta_50pct(diagram):
         x.append(find_50pct(t))
     return abs(x[0] - x[1])
 
-def process_diagram(path, diagram):
+def process_diagram(path, diagram, settings):
     # Diagram
     title = diagram.title
     if not title:
         title = "Diagram {0}".format(diagram.index)
 
-    # Save screenshot
+    # Screenshot
     path.cd_diagram(title)
-    path.mkdirs()
-    filename = path.file_path(title, ".png")
-    print(title, flush=True)
-    diagram.save_screenshot_locally(filename, "PNG")
-
-    # Read screenshot
     data = OrderedDict()
-    with open(filename, 'rb') as f:
-        data['screenshot'] = base64.b64encode(f.read()).decode()
+    if not settings['save']['disable screenshots']:
+        path.mkdirs()
+        filename = path.file_path(title, ".png")
+        print(title, flush=True)
+        diagram.save_screenshot_locally(filename, "PNG")
+        with open(filename, 'rb') as f:
+            data['screenshot'] = base64.b64encode(f.read()).decode()
 
     # Pass/fail
     data["title"] = title
@@ -92,5 +91,5 @@ def process_diagram(path, diagram):
     for i in diagram.traces:
         trace      = diagram._vna.trace(i)
         name       = trace.name
-        data['traces'][name] = process_trace(path, trace)
+        data['traces'][name] = process_trace(path, trace, settings)
     return data

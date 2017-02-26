@@ -14,7 +14,8 @@ from   rohdeschwarz.instruments.vna import Vna
 
 def remove_screenshots(data):
     for d in data['diagrams']:
-        del(data['diagrams'][d]['screenshot'])
+        if 'screenshot' in data['diagrams'][d]:
+            del(data['diagrams'][d]['screenshot'])
     return data
 
 def measure(vna, serial_no, settings):
@@ -33,11 +34,11 @@ def measure(vna, serial_no, settings):
     for i in channels:
         channel = vna.channel(i)
         ports   = get_ports(vna,channel)
-        process_channel(save_path, channel, ports)
+        process_channel(save_path, channel, ports, settings)
 
     # VNA screenshot,
     # global pass/fail
-    data.update(process_vna(save_path, vna))
+    data.update(process_vna(save_path, vna, settings))
 
     # Diagram screenshots,
     # trace csv,
@@ -49,7 +50,7 @@ def measure(vna, serial_no, settings):
     for i in diagrams:
         diagram = vna.diagram(i)
         title   = diagram.title
-        data['diagrams'][title] = process_diagram(save_path, vna.diagram(i))
+        data['diagrams'][title] = process_diagram(save_path, diagram, settings)
 
     # Create summary
     if not settings['save']['disable html summary']:

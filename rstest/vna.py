@@ -1,12 +1,13 @@
 from collections  import OrderedDict
 from rstest.general import touch
 
-def process_vna(path, vna):
+def process_vna(path, vna, settings):
     path.cd_vna_screenshot()
-    path.mkdirs()
-    filename = path.file_path("screenshot", ".png")
-    print("vna screenshot", flush=True)
-    vna.save_screenshot_locally(filename, "PNG")
+    if not settings['save']['disable screenshots']:
+        path.mkdirs()
+        filename = path.file_path("screenshot", ".png")
+        print("vna screenshot", flush=True)
+        vna.save_screenshot_locally(filename, "PNG")
 
     data = OrderedDict()
     if vna.is_limits():

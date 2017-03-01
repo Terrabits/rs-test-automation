@@ -3,7 +3,7 @@ var gulp  = require('gulp');
 var shell = require('gulp-shell')
 
 
-gulp.task('default', function() {
+gulp.task('default', ['restart'], function() {
   // place code for your default task here
 });
 gulp.task('clean-mm', function() {
@@ -26,7 +26,7 @@ gulp.task('build-py',
 	shell.task(['pyinstaller run.spec --distpath=\"app\"'])
 );
 gulp.task('build-mm',
-	shell.task(['bundle exec middleman build'])
+	shell.task(['bundle exec middleman build --no-clean'])
 );
 gulp.task('build', ['build-py', 'build-mm'], function() {
 
@@ -35,9 +35,9 @@ gulp.task('rebuild-py', ['clean-py'],
 	shell.task(['pyinstaller run.spec --distpath=\"app\"'])
 );
 gulp.task('rebuild-mm', ['clean-mm'],
-	shell.task(['bundle exec middleman build'])
+	shell.task(['bundle exec middleman build --no-clean'])
 );
-gulp.task('rebuild', ['clean', 'rebuild-py', 'rebuild-mm'], function() {
+gulp.task('rebuild', ['rebuild-py', 'rebuild-mm'], function() {
 
 });
 gulp.task('restart', ['rebuild'],

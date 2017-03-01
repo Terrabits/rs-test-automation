@@ -17,5 +17,6 @@ const spawn          = window.nodeRequire('child_process').spawn;
 const path        = window.nodeRequire('path');
 var   root_path   = path.resolve(__dirname, 'javascripts/')
 const controls    = window.nodeRequire(path.resolve(root_path, 'controls'));
+const settings    = window.nodeRequire(path.resolve(root_path, 'settings'));
 const div_console = window.nodeRequire(path.resolve(root_path, 'div_console'));
 const results     = window.nodeRequire(path.resolve(root_path, 'iframe_results'));

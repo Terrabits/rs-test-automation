@@ -26,9 +26,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  if (process.argv.length >= 2 && process.argv[1] == "--dev") {
-    mainWindow.webContents.openDevTools({'mode': 'bottom'})
-}
+  mainWindow.webContents.openDevTools({'mode': 'bottom'})
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

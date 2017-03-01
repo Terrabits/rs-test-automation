@@ -1,0 +1,25 @@
+<li id="settings" class="dropdown">
+	<a id="cog" class="dropdown-toggle" style="text-align: right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">
+		<strong><span class="glyphicon glyphicon-cog"></span></strong>
+	</a>
+	<ul class="dropdown-menu">
+		<%= partial 'partials/settings_checkboxes', locals: {
+			checkboxes: {
+				"global-limit": "Global limit", 
+				"snp-files": "Touchstone files",
+				"csv-files": "Trace csv files",
+				"screenshots": "Screenshots",
+				"per-test-limits": "Per-test limits",
+				"markers": "Marker values",
+				"html-summary": "HTML summary",
+				"results-json": "Results json",
+				"organize-by-file": "Organize by file",
+				"project-csv": "Project-wide csv summary"}} %>
+	</ul>
+
+</li>
+<script>
+	$('li#settings .dropdown-menu').on('click', function(e) {
+		e.stopPropagation();
+	});
+</script>

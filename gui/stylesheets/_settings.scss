@@ -1,8 +1,11 @@
 nav {
-  a#a-settings {
+  li#settings a#cog {
     text-align: right;
-  }
-  span#cog-settings {
-    font-size: 35px;
+    span {
+    	font-size: 35px;
+  	}
+  	ul li span {
+  		@extend a;
+  	}
   }
 }

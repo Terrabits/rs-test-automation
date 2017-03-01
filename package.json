@@ -17,7 +17,8 @@
     "R&S",
     "VNA",
     "Vector Network Analyzer",
-    "ZNB", "ZNBT"
+    "ZNB",
+    "ZNBT"
   ],
   "main": "main.js",
   "build": {
@@ -35,16 +36,28 @@
     "electron-config": ">=0.2.1"
   },
   "devDependencies": {
+    "del": "^2.2.2",
     "electron": "^1.4.7",
     "electron-builder": "^8.6.0",
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "gulp-shell": "^0.6.1"
   },
   "scripts": {
     "asar": "asar",
     "start": "electron .",
-    "build-py": "pyinstaller run.spec --distpath=\"app\"",
-    "build-mm": "middleman build --no-clean",
+    "restart": "gulp restart",
+    "clean": "gulp clean",
+    "clean-mm": "gulp clean-mm",
+    "clean-py": "gulp clean-py",
+    "build-py": "gulp build-py",
+    "build-mm": "gulp build-mm",
+    "build":    "gulp build",
+    "rebuild-py": "gulp rebuild-py",
+    "rebuild-mm": "gulp rebuild-mm",
+    "rebuild": "gulp rebuild",
     "pack": "build --dir",
-    "dist": "build"
+    "repack": "gulp repack",
+    "dist": "build",
+    "redist": "gulp redist"
   }
 }

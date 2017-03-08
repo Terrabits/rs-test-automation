@@ -75,16 +75,17 @@ class Settings {
 
 	toJSON() {
 		return {
-			globalLimit: this.globalLimit,
-			snpFiles: this.snpFiles,
-			csvFiles: this.csvFiles,
-			screenshots: this.screenshots,
-			perTestLimits: this.perTestLimits,
-			markers: this.markers,
-			htmlSummary: this.htmlSummary,
-			resultsJson: this.resultsJson,
-			organizeByFile: this.organizeByFile,
-			projectCsv: this.projectCsv
+			"directory":                "/Users/nicholaslalic/Documents/TestAutomation/",
+			"disable global limit":     !this.globalLimit,
+			"disable touchstone files": !this.snpFiles,
+			"disable trace csv files":  !this.csvFiles,
+			"disable screenshots":      !this.screenshots,
+			"disable per-test limits":  !this.perTestLimits,
+			"disable markers":          !this.markers,
+			"disable html summary":     !this.htmlSummary,
+			"disable results json":     !this.resultsJson,
+			"organize by file":         this.organizeByFile,
+			"enable project csv":       this.projectCsv
 		};
 	}
 }

@@ -10,7 +10,7 @@ def process_vna(path, vna, settings):
         vna.save_screenshot_locally(filename, "PNG")
 
     data = OrderedDict()
-    if vna.is_limits():
+    if not settings['save']['disable global limit'] and vna.is_limits():
         path.cd_vna_limits()
         path.mkdirs()
         if vna.passed:

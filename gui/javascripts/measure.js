@@ -17,7 +17,10 @@ function measure() {
   if (process.platform == "win32") {
     rstest_bin = rstest_bin + ".exe";
   }
-	_process = spawn(rstest_bin, [controls.ipAddress(), controls.serialNumber()]);
+  var _settings = {};
+  _settings["instrument"] = {"address": controls.ipAddress()};
+  _settings["save"]       = settings.toJSON();
+	_process = spawn(rstest_bin, [controls.serialNumber(), `${JSON.stringify(_settings)}`]);
 	_process.stdout.on('data', div_console.printAndScroll);
   _process.stderr.on('data', readStderr);
 	_process.on('close', measureClosed);

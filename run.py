@@ -9,9 +9,10 @@ import rstest
 from   rstest.general  import get_root_path
 from   rstest.measure  import measure
 from   rstest.savepath import SavePath
-import rstest.temp
+import rstest.default
 
 # python
+import json
 import sys
 
 def connect_to_vna(address):
@@ -77,7 +78,7 @@ def main():
 	print("===================\n")
 
 	# For now...
-	settings = rstest.temp.settings
+	settings = rstest.default.settings
 
 	# Connect to VNA
 	settings["instrument"]["address"] = str(input("Enter the IP Address: "))
@@ -135,7 +136,9 @@ def main():
 
 if __name__ == "__main__":
 	argc = len(sys.argv)
-	if argc == 2: # check for vna
+	# VNA connection check
+	# run <ip_address>
+	if argc == 2:
 		address = sys.argv[1]
 		vna = connect_to_vna(address)
 		if not vna:
@@ -143,13 +146,15 @@ if __name__ == "__main__":
 		print_vna_info(vna)
 		vna.close()
 		sys.exit(0)
-	elif argc == 3: # run single measurement
-		settings = rstest.temp.settings
-		settings['instrument']['address'] = sys.argv[1]
-		serial_number                     = sys.argv[2]
+	# Single measurement
+	# run <serial_no> <settings_json_str>
+	elif argc == 3:
+		serial_number                     = sys.argv[1]
+		settings = json.loads(sys.argv[2])
 		result = process_dut(serial_number, settings)
 		if not result:
 			sys.exit(1)
 		sys.exit(0)
-	else: # Use in console
+	# Command-line interface
+	else:
 		main()

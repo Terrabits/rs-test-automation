@@ -1,5 +1,7 @@
 import rstest.diagram
-import rstest.general
+from   rstest.general  import get_root_path
+from   rstest.savepath import SavePath
+from   rstest.settings import default as default_settings
 from   rohdeschwarz.instruments.vna import Vna
 from   ddt      import ddt, data
 import os
@@ -9,10 +11,10 @@ import unittest
 @ddt
 class TestDiagram(unittest.TestCase):
 	def setUp(self):
-		path = rstest.general.get_root_path() / "test_diagram"
-		if not os.path.exists(str(path)):
-			os.makedirs(str(path))
-		self.path = path
+		root_path    = get_root_path() / "test_diagram"
+		serial_no    = "123"
+		by_serial_no = True
+		self.path    = SavePath(root_path, serial_no, by_serial_no)
 		vna = Vna()
 		vna.open_tcp()
 		vna.clear_status()
@@ -21,6 +23,7 @@ class TestDiagram(unittest.TestCase):
 		vna.start_sweeps()
 		vna.pause(timeout_ms)
 		self.vna = vna
+		self.settings = default_settings.copy()
 
 	def tearDown(self):
 		self.vna.clear_status()
@@ -51,9 +54,8 @@ class TestDiagram(unittest.TestCase):
 		self.assertEqual(rstest.diagram.is_prop_delay(data['title']), data['is_prop_delay'])
 
 	def test_process_diagram(self):
-		data = rstest.diagram.process_diagram(self.path, self.vna.diagram())
+		data = rstest.diagram.process_diagram(self.path, self.vna.diagram(), self.settings)
 		data['screenshot'] = bool(data['screenshot'])
-		print(data)
 		self.assertFalse(self.vna.is_error())
 
 if __name__ == '__main__':

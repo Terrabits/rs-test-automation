@@ -75,7 +75,7 @@ class Settings {
 
 	toJSON() {
 		return {
-			"directory":                "/Users/nicholaslalic/Documents/TestAutomation/",
+			"directory":                "~/Documents/TestAutomation/",
 			"disable global limit":     !this.globalLimit,
 			"disable touchstone files": !this.snpFiles,
 			"disable trace csv files":  !this.csvFiles,

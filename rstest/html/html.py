@@ -6,7 +6,7 @@ import base64
 from   collections				 import OrderedDict
 from   pathlib     				 import Path
 
-def generate(filename, serial_no, noun, data):
+def generate(filename, serial_no, settings, data):
 	path = Path(__file__).parent / 'views'
 	searchpath = [str(path)]
 	engine = Engine(
@@ -16,6 +16,6 @@ def generate(filename, serial_no, noun, data):
 	engine.global_vars.update({'format_value': format_value})
 	template = engine.get_template('template.html')
 	with open(filename, 'w') as f:
-		f.write(template.render({'data': data, 'serial_no': serial_no, 'noun': noun}))
+		f.write(template.render({'data': data, 'serial_no': serial_no, 'noun': settings['dut']}))
 
 #

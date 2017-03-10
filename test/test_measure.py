@@ -1,22 +1,19 @@
-import rstest.general
-from   rstest.measure                 import measure
+from   rstest.general               import get_root_path
+from   rstest.measure               import measure
+from   rstest.settings import default as   default_settings
 from   rohdeschwarz.instruments.vna import Vna
 import os
 import unittest
 
 class TestMeasure(unittest.TestCase):
 	def setUp(self):
-		path = rstest.general.get_root_path() / "test_measure"
-		if not os.path.exists(str(path)):
-			os.makedirs(str(path))
-		self.path = path
-		vna = Vna()
+		self.serial_no = "123"
+		self.settings  = default_settings.copy()
+		path = get_root_path() / "test_measure"
+		self.settings['save']['directory'] = path
+		vna  = Vna()
 		vna.open_tcp()
 		vna.clear_status()
-		vna.manual_sweep = True
-		timeout_ms = 2*vna.sweep_time_ms + 5000
-		vna.start_sweeps()
-		vna.pause(timeout_ms)
 		self.vna = vna
 
 	def tearDown(self):
@@ -30,7 +27,7 @@ class TestMeasure(unittest.TestCase):
 		vna.close()
 
 	def test_measure(self):
-		measure(self.path, self.vna)
+		measure(self.vna, self.serial_no, self.settings)
 
 if __name__ == '__main__':
 	unittest.main()

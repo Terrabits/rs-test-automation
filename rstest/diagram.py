@@ -44,7 +44,6 @@ def find_50pct(trace):
     m_50pct.find(y_50pct)
     return m_50pct.x
 
-
 def delta_50pct(diagram):
     traces = diagram.traces
     if len(traces) != 2:
@@ -56,14 +55,25 @@ def delta_50pct(diagram):
     return abs(x[0] - x[1])
 
 def process_diagram(path, diagram, settings):
-    # Diagram
+    # title, path
+    data = OrderedDict()
     title = diagram.title
     if not title:
         title = "Diagram {0}".format(diagram.index)
-
-    # Screenshot
     path.cd_diagram(title)
-    data = OrderedDict()
+
+    # Diagram macros
+    if not settings['disable markers']:
+        if is_skew(title):
+            data["skew"]       = delta_50pct(diagram)
+        if is_prop_delay(title):
+            data["prop delay"] = delta_50pct(diagram)
+
+    # Return if nothing to save
+    if not settings.is_save_diagrams():
+        return data
+    
+    # Screenshot
     if not settings['save']['disable screenshots']:
         path.mkdirs()
         filename = path.file_path(title, ".png")
@@ -72,7 +82,7 @@ def process_diagram(path, diagram, settings):
         with open(filename, 'rb') as f:
             data['screenshot'] = base64.b64encode(f.read()).decode()
 
-    # Pass/fail
+    # Limits
     data["title"] = title
     if diagram.is_limits():
         if diagram.passed:
@@ -80,16 +90,5 @@ def process_diagram(path, diagram, settings):
         else:
             data["limits"] = "failed"
 
-    # Diagram macros
-    if is_skew(title):
-        data["skew"]       = delta_50pct(diagram)
-    if is_prop_delay(title):
-        data["prop delay"] = delta_50pct(diagram)
 
-    # Process traces
-    data['traces'] = OrderedDict()
-    for i in diagram.traces:
-        trace      = diagram._vna.trace(i)
-        name       = trace.name
-        data['traces'][name] = process_trace(path, trace, settings)
     return data

@@ -30,3 +30,11 @@ def touch(filename):
 
 def timestamp():
     return datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+
+def and_keys(keys, mydict):
+    result = True
+    for key in keys:
+        result = result and mydict[key]
+    return result
+def nand_keys(keys, mydict):
+    return not and_keys(keys, mydict)

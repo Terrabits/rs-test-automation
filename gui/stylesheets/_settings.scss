@@ -1,11 +1,10 @@
-nav {
-  li#settings a#cog {
-    text-align: right;
-    span {
-    	font-size: 35px;
-  	}
-  	ul li span {
-  		@extend a;
-  	}
+#settings-cog {
+  span {
+    font-size: 35px;
+    color: gray;
   }
+}
+
+#select-all-label {
+	font-weight: bold;
 }

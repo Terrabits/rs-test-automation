@@ -22,11 +22,20 @@ from rstest.general import nand_keys, get_root_path
 
 none_default_dict = defaultdict(lambda: None)
 
+def to_none_default(reg_dict):
+	new_dict = none_default_dict.copy()
+	for key in reg_dict:
+		if isinstance(reg_dict[key], dict):
+			new_dict[key] = to_none_default(reg_dict[key])
+		else:
+			new_dict[key] = reg_dict[key]
+	return new_dict
+
 class Settings(defaultdict):
 	def __init__(self, settings=None):
 		super(Settings, self).__init__(lambda: None)
 		if settings:
-			self.update(settings)
+			self.update(to_none_default(settings))
 		self['dut']        = self['dut'] or 'DUT'
 		self['display']    = self['display'] or 'default'		
 		self['instrument'] = self['instrument'] or none_default_dict.copy()

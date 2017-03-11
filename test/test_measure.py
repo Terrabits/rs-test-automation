@@ -26,8 +26,20 @@ class TestMeasure(unittest.TestCase):
 		vna.open_tcp()
 		vna.close()
 
-	def test_measure(self):
+	def test_measure_all(self):
 		measure(self.vna, self.serial_no, self.settings)
+
+	def test_measure_nothing(self):
+		# Disable everything
+		settings = default_settings.copy()
+		save = settings['save']
+		dir = save['directory']
+		display = save['display']
+		for key in save:
+			save[key] = True;
+		save['directory'] = dir
+		save['display'] = display
+		measure(self.vna, self.serial_no, settings)
 
 if __name__ == '__main__':
 	unittest.main()

@@ -18,3 +18,7 @@
 ul.right-chevron-list {
 	@include right-chevron-list;
 }
+
+ul.no-bullets {
+	list-style: none;
+}

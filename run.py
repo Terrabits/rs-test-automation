@@ -9,7 +9,8 @@ import rstest
 from   rstest.general  import get_root_path
 from   rstest.measure  import measure
 from   rstest.savepath import SavePath
-import rstest.default
+from   rstest.settings import Settings
+from   rstest.settings import default as default_settings
 
 # python
 import json
@@ -78,7 +79,7 @@ def main():
 	print("===================\n")
 
 	# For now...
-	settings = rstest.default.settings
+	settings = default_settings.copy()
 
 	# Connect to VNA
 	settings["instrument"]["address"] = str(input("Enter the IP Address: "))
@@ -149,8 +150,11 @@ if __name__ == "__main__":
 	# Single measurement
 	# run <serial_no> <settings_json_str>
 	elif argc == 3:
-		serial_number                     = sys.argv[1]
-		settings = json.loads(sys.argv[2])
+		print(sys.argv[0], flush=True);
+		print(sys.argv[1], flush=True);
+		print(sys.argv[2], flush=True);
+		serial_number = sys.argv[1]
+		settings = Settings(json.loads(sys.argv[2]))
 		result = process_dut(serial_number, settings)
 		if not result:
 			sys.exit(1)

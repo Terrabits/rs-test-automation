@@ -9,9 +9,10 @@ from   rstest.vna      import process_vna
 from   rohdeschwarz.instruments.vna import Vna
 
 import base64
+from   collections     import OrderedDict
 import os
 import json
-from   collections     import OrderedDict
+
 
 def remove_screenshots(data):
     for d in data['diagrams']:
@@ -39,7 +40,8 @@ def measure(vna, serial_no, settings):
 
     # VNA screenshot,
     # global pass/fail
-    data.update(process_vna(path, vna, settings))
+    result = process_vna(path, vna, settings);
+    data.update(result)
 
     # Diagram screenshots,
     # trace csv,

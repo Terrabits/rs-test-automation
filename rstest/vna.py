@@ -4,7 +4,7 @@ from rstest.general import touch
 def process_vna(path, vna, settings):
     data = OrderedDict()
     if not settings.is_save_vna():
-        return
+        return data
 
     path.cd_vna_screenshot()
     if not settings['save']['disable screenshots']:

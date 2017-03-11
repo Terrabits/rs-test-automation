@@ -1,0 +1,30 @@
+<div id="settings-drawer" class="drawer drawer-right  dw-xs-4 fold" aria-labelledby="settings-drawer">
+	<div class="drawer-controls">
+      <a id="settings-cog" data-toggle="drawer" aria-foldedopen="false" aria-controls="settings-drawer" role="button" href="#settings-drawer">
+				<strong><span class="glyphicon glyphicon-cog"></span></strong>
+			</a>
+  </div>
+	<div class="drawer-contents">
+		<div class="drawer-body">
+		<form>
+			<label>Save</label>
+			<%= partial 'partials/open_dir', locals: {id: "save-dir",         text: "~/Documents/TestAutomation"} %>
+			<%= partial 'partials/checkbox', locals: {id: "select-all",       text: "Select All"        , label_id: "select-all-label"} %>
+			<%= partial 'partials/checkbox', locals: {id: "global-limit",     text: "global limit"      } %>
+			<%= partial 'partials/checkbox', locals: {id: "snp-files",        text: "touchstone files"  } %>
+			<%= partial 'partials/checkbox', locals: {id: "csv-files",        text: "trace csv files"   } %>
+			<%= partial 'partials/checkbox', locals: {id: "screenshots",      text: "screenshots"       } %>
+			<%= partial 'partials/checkbox', locals: {id: "per-test-limits",  text: "per-test limits"   } %>
+			<%= partial 'partials/checkbox', locals: {id: "markers",          text: "markers"           } %>
+			<%= partial 'partials/checkbox', locals: {id: "html-summary",     text: "html summary"      } %>
+			<%= partial 'partials/checkbox', locals: {id: "results-json",     text: "results json"      } %>
+			<%= partial 'partials/checkbox', locals: {id: "organize-by-file", text: "organize by file"  , is_checked: false} %>
+			<%= partial 'partials/checkbox', locals: {id: "project-csv",      text: "enable project csv", is_checked: false} %>
+		</form>
+		</div>
+	</div>
+</div>
+<script>
+	const settings = window.nodeRequire(path.resolve(root_path, 'settings'));
+	$('#save-dir-button').on('click', () => { settings.save.getDirectory() });
+</script>

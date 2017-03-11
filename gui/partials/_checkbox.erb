@@ -1,0 +1,7 @@
+<!-- Inputs: id, label_id, text, is_checked -->
+<div class="checkbox">
+	<label<%= " id=\"#{label_id}\"" if defined? label_id %>>
+		<input type="checkbox" id="<%= id %>"<%= " checked" if not defined? is_checked or is_checked %>>
+		<%= text %>
+	</label>
+</div>

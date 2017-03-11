@@ -19,8 +19,10 @@ function measure() {
   }
   var _settings = {};
   _settings["instrument"] = {"address": controls.ipAddress()};
-  _settings["save"]       = settings.toJSON();
-	_process = spawn(rstest_bin, [controls.serialNumber(), `${JSON.stringify(_settings)}`]);
+  _settings["save"]       = settings.save.toJSON();
+  var json_str = JSON.stringify(_settings);
+  json_str = json_str.replace(/\\/g, "\\\\");
+	_process = spawn(rstest_bin, [controls.serialNumber(), json_str]);
 	_process.stdout.on('data', div_console.printAndScroll);
   _process.stderr.on('data', readStderr);
 	_process.on('close', measureClosed);

@@ -43,7 +43,6 @@ class Save {
 		return showOpenDialog(browserWindow, options);
 	}
 	getDirectory() {
-		console.log(this);
 		var result = this.showDirectoryDialog();
 		if (result.length) {
 			this.directory = result[0];

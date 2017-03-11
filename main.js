@@ -2,6 +2,7 @@ const electron      = require('electron')
 const app           = electron.app
 const BrowserWindow = electron.BrowserWindow
 
+const isDev  = require('electron-is-dev');
 const path   = require('path')
 const url    = require('url')
 // const Config = require('electron-config')
@@ -26,7 +27,11 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools({'mode': 'bottom'})
+
+  if (isDev) {
+    mainWindow.webContents.openDevTools({'mode': 'bottom'})
+  }
+  
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

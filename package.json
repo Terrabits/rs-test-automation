@@ -33,10 +33,12 @@
     ]
   },
   "dependencies": {
-    "electron-config": ">=0.2.1"
+    "electron-config": ">=0.2.1",
+    "electron-is-dev": "^0.1.2"
   },
   "devDependencies": {
     "del": "^2.2.2",
+    "devtron": "^1.4.0",
     "electron": "^1.4.7",
     "electron-builder": "^8.6.0",
     "gulp": "^3.9.0",
@@ -51,7 +53,7 @@
     "clean-py": "gulp clean-py",
     "build-py": "gulp build-py",
     "build-mm": "gulp build-mm",
-    "build":    "gulp build",
+    "build": "gulp build",
     "rebuild-py": "gulp rebuild-py",
     "rebuild-mm": "gulp rebuild-mm",
     "rebuild": "gulp rebuild",

@@ -28,14 +28,20 @@ function measure() {
 	_process.on('close', measureClosed);
 }
 function measureClosed(code) {
-  controls.enableMeasure();
   if (code == 0) {
     div_console.hide();
-
-    var filename = controls.serialNumber() + ".html"
-    var url      = path.resolve(os.homedir(), 'Documents', 'TestAutomation', 'summary', filename);
+    var saveDir  = settings.save.directory;
+    var serialNo = controls.serialNumber();
+    var url;
+    if (settings.save.organizeByFile) {
+      var filename = serialNo + ".html";
+      url          = path.join(saveDir, "summary", filename);
+    }
+    else {
+      var filename = "summary.html";
+      url          = path.join(saveDir, serialNo, filename);
+    }
     controls.clearSerialNumber();
-
     results.setUrl(url);
     results.show();
   }
@@ -49,6 +55,7 @@ function measureClosed(code) {
     div_console.printAndScroll("* Python error:");
     div_console.printAndScroll(_stderr_read);
   }
+  controls.enableMeasure();
 }
 function disconnect() {
   controls.hideAlert();

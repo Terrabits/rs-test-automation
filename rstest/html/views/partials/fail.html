@@ -1,9 +1,8 @@
-@def render(is_fail):
+@def render(is_pass):
   @#ignore
-  @if is_fail:
+  @if not is_pass:
     <h3 style="color: red; display: inline-block; float: right;">FAILED</h3>
-  @end
-  @if not is_fail:
+  @else:
     <h3 style="color: green; display: inline-block; float: right;">PASSED</h3>
   @end
 @end

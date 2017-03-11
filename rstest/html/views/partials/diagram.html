@@ -8,7 +8,7 @@
   <div>
     <h2 style="display: inline-block">@{diagram['title']}</h2>
     @if 'limits' in diagram:
-      @fail.render(diagram['limits'] == 'failed')
+      @fail.render(diagram['limits'] == 'passed')
     @end
   </div>
   @if 'screenshot' in diagram:

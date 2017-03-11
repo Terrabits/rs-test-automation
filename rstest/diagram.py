@@ -1,9 +1,13 @@
-import base64
-from   collections  import OrderedDict
-import os
-import re
 from   rstest.general import make_path_safe
 from   rstest.trace   import process_trace
+
+from   rohdeschwarz.general  import to_float
+
+import base64
+from   collections    import OrderedDict
+import os
+import re
+
 
 def is_skew(title):
     title = title.lower()
@@ -54,20 +58,67 @@ def delta_50pct(diagram):
         x.append(find_50pct(t))
     return abs(x[0] - x[1])
 
+def limit_in_title(title):
+    limits_str_re = re.compile('(?:\\[)((?:(?:[^,]+),?)+)(?:\\])$')
+    limits_strs = limits_str_re.findall(title)
+    if limits_strs:
+        return limits_strs[0]
+    else:
+        return None
+
+def strip_limit_from_title(title):
+    limit_str = limit_in_title(title);
+    if not limit_str:
+        return title
+    return title[:-(len(limit_str)+2)].strip()
+
+def eval_limit(limit_str, value):
+    compare_op, num_str = limit_str.split(":")
+    compare_op = compare_op.strip().lower()
+    limit      = to_float(num_str)
+    if compare_op == "max":
+        return value <= limit
+    if compare_op == "min":
+        return value >= limit
+    # Did not recognize operator
+    return False
+
+def eval_limits(title, value):
+    limits_str    = limit_in_title(title)
+    limit_strs    = limits_str.split(',')
+    is_pass = True
+    for limit_str in limit_strs:
+        is_pass = is_pass and eval_limit(limit_str, value)
+    return is_pass
+
 def process_diagram(path, diagram, settings):
     # title, path
     data = OrderedDict()
     title = diagram.title
     if not title:
         title = "Diagram {0}".format(diagram.index)
-    path.cd_diagram(title)
+    path.cd_diagram(strip_limit_from_title(title))
 
     # Diagram macros
     if not settings['disable markers']:
         if is_skew(title):
-            data["skew"]       = delta_50pct(diagram)
+            value        = delta_50pct(diagram)
+            data["skew"] = value
+            if limit_in_title(title):
+                is_passed = eval_limits(title, value)
+                if not is_passed:
+                    data['limits'] = "failed"
+                elif 'limits' not in data:
+                    data['limits'] = "passed"
         if is_prop_delay(title):
-            data["prop delay"] = delta_50pct(diagram)
+            value              = delta_50pct(diagram)
+            data["prop delay"] = value
+            if limit_in_title(title):
+                is_passed = eval_limits(title, value)
+                if not is_passed:
+                    data['limits'] = "failed"
+                elif 'limits' not in data:
+                    data['limits'] = "passed"
 
     # Return if nothing to save
     if not settings.is_save_diagrams():
@@ -83,12 +134,11 @@ def process_diagram(path, diagram, settings):
             data['screenshot'] = base64.b64encode(f.read()).decode()
 
     # Limits
-    data["title"] = title
+    data["title"] = strip_limit_from_title(title)
     if diagram.is_limits():
-        if diagram.passed:
-            data["limits"] = "passed"
-        else:
+        if not diagram.passed:
             data["limits"] = "failed"
-
+        elif not "limits" in data:
+            data["limits"] = "passed"
 
     return data

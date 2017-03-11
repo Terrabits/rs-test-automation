@@ -1,5 +1,5 @@
 from   rstest.channel  import process_channel
-from   rstest.diagram  import process_diagram
+from   rstest.diagram  import process_diagram, strip_limit_from_title
 from   rstest.general  import get_ports,  timestamp
 from   rstest.html     import generate as generate_html
 from   rstest.trace    import process_trace
@@ -55,6 +55,7 @@ def measure(vna, serial_no, settings):
         title   = diagram.title
         if not title:
             title = "Diagram {0}".format(diagram.index)
+        title   = strip_limit_from_title(title)
         diagram_data = data['diagrams'][title] \
                      = process_diagram(path, diagram, settings)
         traces_data  = diagram_data['traces']  \

@@ -14,7 +14,8 @@ gulp.task('clean-mm', function() {
 });
 gulp.task('clean-py', function() {
 	return del([
-	    'app/rstest'
+	    'app/rstest',
+	    'build/run'
     ]);
 });
 gulp.task('clean', ['clean-mm', 'clean-py'], function() {

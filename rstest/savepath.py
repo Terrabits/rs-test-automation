@@ -4,17 +4,17 @@ import re
 
 
 class SavePath:
-    def __init__(self, save_dir, serial_no, by_serial_no=True):
+    def __init__(self, root_path, serial_no, by_serial_no=True):
         self.serial_no    = serial_no
         self.by_serial_no = by_serial_no
-        self.save_dir     = Path(save_dir).expanduser()
+        self.root_path    = Path(root_path).expanduser()
         self.reset()
     def cd(self, path):
         self.current_dir /= self.make_safe_str(path)
     def cd_up(self):
         self.current_dir = self.current_dir.parent
     def reset(self):
-        self.current_dir  = self.save_dir
+        self.current_dir  = self.root_path
         if self.by_serial_no:
             self.cd(self.serial_no)
     def mkdirs(self):

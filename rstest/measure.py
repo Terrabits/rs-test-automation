@@ -1,10 +1,11 @@
-from   rstest.channel  import process_channel
-from   rstest.diagram  import process_diagram, strip_limit_from_title
-from   rstest.general  import get_ports,  timestamp
-from   rstest.html     import generate as generate_html
-from   rstest.trace    import process_trace
-from   rstest.savepath import SavePath
-from   rstest.vna      import process_vna
+from   rstest.channel    import process_channel
+from   rstest.diagram    import process_diagram, strip_limit_from_title
+from   rstest.general    import get_ports, timestamp
+from   rstest.html       import generate as generate_html
+from   rstest.projectcsv import generate as generate_csv
+from   rstest.trace      import process_trace
+from   rstest.savepath   import SavePath
+from   rstest.vna        import process_vna
 
 from   rohdeschwarz.instruments.vna import Vna
 
@@ -82,5 +83,12 @@ def measure(vna, serial_no, settings):
         path.mkdirs()
         with open(path.file_path('summary', '.json'), 'w') as f:
             json.dump(data, f)
+    if settings['save']['enable project csv']:
+        print("cumulative.csv", flush=True)
+        filename = path.root_path / "cumulative.csv"
+        filename = str(filename)
+        generate_csv(filename, serial_no, data)
+
+
 
     return data

@@ -1,4 +1,4 @@
-from rstest.general                 import get_root_path
+from   rstest.general               import get_root_path
 from   rstest.html                  import generate
 from   rstest.savepath              import SavePath
 from   rstest.settings              import default as default_settings

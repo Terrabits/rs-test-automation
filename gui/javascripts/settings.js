@@ -1,10 +1,8 @@
 const electron       = nodeRequire('electron');
 const showOpenDialog = electron.remote.dialog.showOpenDialog
 const browserWindow  = electron.remote.getCurrentWindow();
-
-function box(id) {
-	return document.getElementById(id);
-}
+const os             = nodeRequire('os');
+const path           = nodeRequire('path');
 
 class Save {
 	constructor() {
@@ -12,7 +10,7 @@ class Save {
 			this.directory = config.get('save_directory');
 		}
 		else {
-			this.directory = "~/Documents/TestAutomation";
+			this.directory = path.join(os.homedir(), "Documents", "TestAutomation")
 		}
 		this.initProperty('globalLimit',    'global-limit');
 		this.initProperty('snpFiles',       'snp-files');
@@ -32,110 +30,110 @@ class Save {
 	set directory(path) {
 		if (path) {
 			config.set("save_directory", path);
-			box('save-dir-input').value = path;
+			$('#save-dir-input').val(path);
 		}
 	}
 	showDirectoryDialog() {
 		var options = {
-			defaultpath: this.directory,
+			defaultPath: this.directory,
 			properties: ['openDirectory']
 		};
 		return showOpenDialog(browserWindow, options);
 	}
 	getDirectory() {
 		var result = this.showDirectoryDialog();
-		if (result.length) {
+		if (result && result.length) {
 			this.directory = result[0];
 		}
 	}
 
 	get globalLimit() {
-		return box('global-limit').checked;
+		return $('#global-limit').checked;
 	}
 	set globalLimit(checked) {
 		config.set('global-limit', checked);
-		box('global-limit').checked = checked;
+		$('#global-limit').checked = checked;
 		this.updateSelectAll();
 	}
 
 	get snpFiles() {
-		return box('snp-files').checked;
+		return $('#snp-files').checked;
 	}
 	set snpFiles(checked) {
 		config.set('snp-files', checked);
-		box('snp-files').checked = checked;
+		$('#snp-files').checked = checked;
 			this.updateSelectAll();
 	}
 
 	get csvFiles() {
-		return box('csv-files').checked;
+		return $('#csv-files').checked;
 	}
 	set csvFiles(checked) {
 		config.set('csv-files', checked);
-		box('csv-files').checked = checked;
+		$('#csv-files').checked = checked;
 		this.updateSelectAll();
 	}
 
 	get screenshots() {
-		return box('screenshots').checked;
+		return $('#screenshots').checked;
 	}
 	set screenshots(checked) {
 		config.set('screenshots', checked);
-		box('screenshots').checked = checked;
+		$('#screenshots').checked = checked;
 		this.updateSelectAll();
 	}
 
 	get perTestLimits() {
-		return box('per-test-limits').checked;
+		return $('#per-test-limits').checked;
 	}
 	set perTestLimits(checked) {
 		config.set('per-test-limits', checked);
-		box('per-test-limits').checked = checked;
+		$('#per-test-limits').checked = checked;
 		this.updateSelectAll();
 	}
 
 	get markers() {
-		return box('markers').checked;
+		return $('#markers').checked;
 	}
 	set markers(checked) {
 		config.set('markers', checked);
-		box('markers').checked = checked;
+		$('#markers').checked = checked;
 		this.updateSelectAll();
 	}
 
 	get htmlSummary() {
-		return box('html-summary').checked;
+		return $('#html-summary').checked;
 	}
 	set htmlSummary(checked) {
 		config.set('html-summary', checked);
-		box('html-summary').checked = checked;
+		$('#html-summary').checked = checked;
 		this.updateSelectAll();
 	}
 
 	get resultsJson() {
-		return box('results-json').checked;
+		return $('#results-json').checked;
 	}
 	set resultsJson(checked) {
 		config.set('results-json', checked);
-		box('results-json').checked = checked;
+		$('#results-json').checked = checked;
 		this.updateSelectAll();
 	}
 
 	get organizeByFile() {
-		return box('organize-by-file').checked;
+		return $('#organize-by-file').checked;
 	}
 	set organizeByFile(checked) {
 		config.set('organize-by-file', checked);
-		box('organize-by-file').checked = checked;
+		$('#organize-by-file').checked = checked;
 		this.updateSelectAll();
 	}
 
 	get projectCsv() {
-		return box('project-csv').checked;
+		return $('#project-csv').checked;
 	}
 	set projectCsv(checked) {
 		config.set('project-csv', checked);
-		box('project-csv').checked = checked;
+		$('#project-csv').checked = checked;
 		this.updateSelectAll();
 	}
 
@@ -152,7 +150,7 @@ class Save {
 			   this.projectCsv;
 	}
 	get selectAll() {
-		return box('select-all').checked;
+		return $('#select-all').checked;
 	}
 	set selectAll(checked) {
 		this.globalLimit    = checked;
@@ -165,10 +163,10 @@ class Save {
 		this.resultsJson    = checked;
 		this.organizeByFile = checked;
 		this.projectCsv     = checked;
-		box('select-all').checked = checked;
+		$('#select-all').checked = checked;
 	}
 	updateSelectAll() {
-		box('select-all').checked = this.isAllSelected;
+		$('#select-all').checked = this.isAllSelected;
 	}
 
 	initProperty(name, key) {
@@ -194,18 +192,72 @@ class Save {
 	}
 }
 
-var save = new Save();
-$(box('select-all'      )).on('change', function() {save.selectAll      = this.checked;});
-$(box('global-limit'    )).on('change', function() {save.globalLimit    = this.checked;});
-$(box('snp-files'       )).on('change', function() {save.snpFiles       = this.checked;});
-$(box('csv-files'       )).on('change', function() {save.csvFiles       = this.checked;});
-$(box('screenshots'     )).on('change', function() {save.screenshots    = this.checked;});
-$(box('per-test-limits' )).on('change', function() {save.perTestLimits  = this.checked;});
-$(box('markers'         )).on('change', function() {save.markers        = this.checked;});
-$(box('html-summary'    )).on('change', function() {save.htmlSummary    = this.checked;});
-$(box('results-json'    )).on('change', function() {save.resultsJson    = this.checked;});
-$(box('organize-by-file')).on('change', function() {save.organizeByFile = this.checked;});
-$(box('project-csv'     )).on('change', function() {save.projectCsv     = this.checked;});
+class Instrument {
+	constructor() {
+		if (config.has('address')) {
+			this.address = config.get('address');
+		}
+	}
 
-var settings   = {save: save};
-module.exports = settings;
+	get connectionType() {
+		return 'tcpip';
+	}
+
+	get address() {
+		var addr = $('#address').val();
+		config.set('address', addr)
+		return addr;
+	}
+	set address(addr) {
+		config.set('address', addr);
+		$('#address').val(addr);
+	}
+
+	toJSON() {
+		return {
+			"connection type": this.connectionType,
+			"address":         this.address
+		};
+	}
+}
+
+class Settings {
+	constructor() {
+		this.instrument = new Instrument();
+		this.save = new Save();
+	}
+	get serialNo() {
+		return $('#serial-no').val();
+	}
+	set serialNo(value) {
+		$('#serial-no').val(value);
+	}
+	clearSerialNo() {
+		this.serialNo = '';
+	}
+
+	summaryUrl() {
+		if (!save.htmlSummary) {
+			return '';
+		}
+		var root_path  = this.save.directory;
+    if (this.save.organizeByFile) {
+      var filename = this.serialNo + ".html";
+      return path.join(root_path, "summary", filename);
+    }
+    else {
+      var filename = "summary.html";
+      return path.join(root_path, this.serialNo, filename);
+    }
+	}
+
+	toJSON() {
+		return {
+			"serial no": this.serialNo,
+			"instrument": this.instrument.toJSON(),
+			"save":       this.save.toJSON()
+		};
+	}
+}
+
+module.exports = new Settings();

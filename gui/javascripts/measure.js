@@ -1,4 +1,4 @@
-
+const spawn = window.nodeRequire('child_process').spawn;
 
 var _stderr_read = '';
 function readStderr(data) {
@@ -17,12 +17,7 @@ function measure() {
   if (process.platform == "win32") {
     rstest_bin = rstest_bin + ".exe";
   }
-  var _settings = {};
-  _settings["instrument"] = {"address": controls.ipAddress()};
-  _settings["save"]       = settings.save.toJSON();
-  var json_str = JSON.stringify(_settings);
-  json_str = json_str.replace(/\\/g, "\\\\");
-	_process = spawn(rstest_bin, [controls.serialNumber(), json_str]);
+	_process = spawn(rstest_bin, [settings.serialNo, settings.toJSON()]);
 	_process.stdout.on('data', div_console.printAndScroll);
   _process.stderr.on('data', readStderr);
 	_process.on('close', measureClosed);
@@ -57,12 +52,3 @@ function measureClosed(code) {
   }
   controls.enableMeasure();
 }
-function disconnect() {
-  controls.hideAlert();
-  results.hide()
-  div_console.hide()
-  controls.enableConnect();
-  controls.showConnect()
-}
-$('#measure').on('click', measure);
-$('#disconnect').on('click', disconnect)

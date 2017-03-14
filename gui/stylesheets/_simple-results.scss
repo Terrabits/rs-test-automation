@@ -1,0 +1,13 @@
+div#simple-results {
+  table {
+    td.status.passed {
+      color: green;
+    }
+    td.status.failed {
+      color: red;
+    }
+    tr.current-row td {
+      font-weight: bold;
+    }
+  }
+}

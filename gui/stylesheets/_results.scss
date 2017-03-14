@@ -1,8 +1,21 @@
 div#results {
-	iframe {
+	iframe#full-results {
 		width: 1050px;
 		height: 800px;
 		@extend img.center;
 		border-top: solid black 3px;
+	}
+	div#simple-results {
+	  table {
+	    td.status.passed {
+	      color: green;
+	    }
+	    td.status.failed {
+	      color: red;
+	    }
+	    tr.current-row td {
+	      font-weight: bold;
+	    }
+	  }
 	}
 }

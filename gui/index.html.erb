@@ -2,11 +2,10 @@
 title:  middleman-bootstrap
 layout: default
 ---
-
 <div class="main container">
   <%= partial 'partials/alert'    %>
   <%= partial 'partials/controls' %>
   <%= partial 'partials/display'  %>
+  <%= partial 'partials/drawer'   %>
 </div>
-<%= partial 'partials/drawer' %>
 <%= javascript_include_tag :app, relative: true %>

@@ -12,7 +12,7 @@ class Alert {
   setTimer() {
     var callback = () => {
       this.timer = undefined;
-      this.message = '';
+      this.message = 'X';
       this.hide();
     };
     this.timer = setTimeout(callback, 5000);
@@ -28,6 +28,7 @@ class Alert {
   showMessage(msg) {
     this.clearTimer();
     this.message = msg;
+    this.show();
     this.setTimer();
   }
 }

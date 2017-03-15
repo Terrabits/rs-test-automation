@@ -9,7 +9,10 @@ gulp.task('default', ['restart'], function() {
 gulp.task('clean-mm', function() {
 	return del([
 		'app/**/*',
-	    '!app/rstest'
+    '!app',
+    '!app/rstest',
+    '!app/rstest/*',
+    '!app/rstest/**/*'
     ]);
 });
 gulp.task('clean-py', function() {

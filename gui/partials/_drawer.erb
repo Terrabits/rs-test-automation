@@ -1,12 +1,13 @@
-<div id="settings-drawer" class="drawer drawer-right  dw-xs-4 fold" aria-labelledby="settings-drawer">
+<div id="settings-drawer" class="drawer drawer-right dw-xs-4 fold" aria-labelledby="settings-drawer" aria-expanded="false">
 	<div class="drawer-controls">
-      <a id="settings-cog" data-toggle="drawer" aria-foldedopen="false" aria-controls="settings-drawer" role="button" href="#settings-drawer">
+      <a id="settings-cog" class="folded" role="button" href="#settings-drawer" data-toggle="drawer" aria-controls="settings-drawer" aria-expanded="false">
 				<strong><span class="glyphicon glyphicon-cog"></span></strong>
 			</a>
   </div>
 	<div class="drawer-contents">
 		<div class="drawer-body">
-		<form>
+		<form onsubmit="return false;">
+			<%= partial 'partials/display_results' %>
 			<label>Save</label>
 			<%= partial 'partials/open_dir', locals: {id: "save-dir",         text: "~/Documents/TestAutomation"} %>
 			<%= partial 'partials/checkbox', locals: {id: "select-all",       text: "Select All"        , label_id: "select-all-label"} %>
@@ -25,5 +26,6 @@
 	</div>
 </div>
 <script>
+	$('#settings-drawer').drawer({toggle: false});
 	const settings = window.nodeRequire(path.resolve(root_path, 'settings'));
 </script>

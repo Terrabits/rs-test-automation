@@ -1,7 +1,7 @@
-const path = window.nodeRequire('path');
-const fs   = window.nodeRequire('fs');
-
 class FullResults {
+  get shown() {
+    return !$('#full-results').hasClass('hide');
+  }
   hide() {
     $('#full-results').addClass('hide');
   }

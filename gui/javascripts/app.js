@@ -3,7 +3,13 @@ const onMeasureClicked    = window.nodeRequire(path.resolve(root_path, 'on-measu
 const onDisconnectClicked = window.nodeRequire(path.resolve(root_path, 'on-disconnect-clicked'));
 
 // Settings callbacks
-$('#save-dir-button' ).on('click',  function() {settings.save.getDirectory()                });
+$('#display-results' ).on('change', function() {
+  settings.display.results = this.value;
+  if (display.results.shown) {
+    display.showResults(this.value);
+  }
+});
+$('#save-dir-button' ).on('click',  function() {settings.save.getDirectory();               });
 $('#select-all'      ).on('change', function() {settings.save.selectAll      = this.checked;});
 $('#global-limit'    ).on('change', function() {settings.save.globalLimit    = this.checked;});
 $('#snp-files'       ).on('change', function() {settings.save.snpFiles       = this.checked;});
@@ -20,3 +26,7 @@ $('#project-csv'     ).on('change', function() {settings.save.projectCsv     = t
 $('#connect-button').on('click', onConnectClicked);
 $('#measure-button').on('click', onMeasureClicked);
 $('#disconnect-button').on('click', onDisconnectClicked)
+
+if (settings.instrument.address) {
+  onConnectClicked();
+}

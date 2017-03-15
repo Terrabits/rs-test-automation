@@ -2,6 +2,7 @@ import datetime
 import os
 from   pathlib import Path
 import re
+import time
 
 
 def get_root_path():
@@ -29,7 +30,10 @@ def touch(filename):
         os.utime(filename, None)
 
 def timestamp():
-    return datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    t_delta  = datetime.timedelta(seconds=time.timezone)
+    t_zone   = datetime.timezone(t_delta)
+    t_now    = datetime.datetime.now(t_zone).replace(microsecond=0)
+    return t_now.isoformat()
 
 def and_keys(keys, mydict):
     result = True

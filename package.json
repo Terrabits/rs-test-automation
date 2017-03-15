@@ -2,7 +2,7 @@
   "name": "rs-test-automation",
   "productName": "R&S Test Automation",
   "description": "Performs all measurements and captures relevant diagrams and data",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "author": "Nick Lalic",
   "copyright": "© 2017 Rohde & Schwarz North America",
   "homepage": "https://vna.rs-us.net",
@@ -34,7 +34,8 @@
   },
   "dependencies": {
     "electron-config": ">=0.2.1",
-    "electron-is-dev": "^0.1.2"
+    "electron-is-dev": "^0.1.2",
+    "moment": "^2.17.1"
   },
   "devDependencies": {
     "del": "^2.2.2",

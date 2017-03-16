@@ -17,8 +17,10 @@
 <body style="width: 1000px;">
     <article class="markdown-body" style="position: relative;">
     @header.render(serial_no, noun, data)
-    @for d in data['diagrams'].keys():
-      @diagram.render(data['diagrams'][d])
+    @if 'diagrams' in data:
+      @for d in data['diagrams'].keys():
+        @diagram.render(data['diagrams'][d])
+      @end
     @end
     </article>
 </body>

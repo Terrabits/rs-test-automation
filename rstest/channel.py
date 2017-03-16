@@ -3,6 +3,7 @@ import os
 
 def process_channel(path, channel, ports, settings):
     if not settings.is_save_channels():
+        print("Sweeping channel {0}".format(channel.index), flush=True)
         channel.sweep()
         return
     ch_name  = channel.name

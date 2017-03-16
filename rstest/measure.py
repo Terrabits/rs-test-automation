@@ -1,5 +1,5 @@
 from   rstest.channel    import process_channel
-from   rstest.diagram    import process_diagram, strip_limit_from_title
+from   rstest.diagram    import process_diagram, diagram_limits_from_data, strip_limit_from_title
 from   rstest.general    import get_ports, timestamp
 from   rstest.html       import generate as generate_html
 from   rstest.projectcsv import generate as generate_csv
@@ -49,22 +49,28 @@ def measure(vna, serial_no, settings):
     # limits
     # markers,
     # other (skew, prop delay)
-    data['diagrams'] = OrderedDict()
-    diagrams = vna.diagrams
-    for i in diagrams:
-        diagram = vna.diagram(i)
-        title   = diagram.title
-        if not title:
-            title = "Diagram {0}".format(diagram.index)
-        title   = strip_limit_from_title(title)
-        diagram_data = data['diagrams'][title] \
-                     = process_diagram(path, diagram, settings)
-        traces_data  = diagram_data['traces']  \
-                     = OrderedDict()
-        for i in diagram.traces:
-            trace      = diagram._vna.trace(i)
-            name       = trace.name
-            traces_data[name] = process_trace(path, trace, settings)
+    if settings.is_save_diagrams() or settings.is_save_traces():
+        data['diagrams'] = OrderedDict()
+        diagrams = vna.diagrams
+        for d in diagrams:
+            diagram = vna.diagram(d)
+            title   = diagram.title
+            if not title:
+                title = "Diagram {0}".format(diagram.index)
+            title   = strip_limit_from_title(title)
+            print("Processing {0}".format(title), flush=True)
+            diagram_data = data['diagrams'][title] \
+                         = process_diagram(path, diagram, settings)
+            traces_data  = diagram_data['traces']  \
+                         = OrderedDict()
+            if settings.is_save_traces():
+                for t in diagram.traces:
+                    print("Processing {0}".format(t), flush=True)
+                    trace      = diagram._vna.trace(t)
+                    name       = trace.name
+                    traces_data[name] = process_trace(path, trace, settings)
+            if not settings['save']['disable per-test limits']:
+                diagram_limits_from_data(diagram_data)
 
     # Create summary
     if not settings['save']['disable html summary']:
@@ -74,7 +80,8 @@ def measure(vna, serial_no, settings):
         generate_html(path.file_path('summary', '.html'), serial_no, settings, data)
 
     # Remove screenshot binary from data
-    remove_screenshots(data)
+    if not settings['save']['disable screenshots']:
+        remove_screenshots(data)
 
     # Write data
     if not settings['save']['disable results json']:

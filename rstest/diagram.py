@@ -91,6 +91,53 @@ def eval_limits(title, value):
         is_pass = is_pass and eval_limit(limit_str, value)
     return is_pass
 
+def process_skew(diagram, title):
+    data = OrderedDict()
+    if is_skew(title):
+        print('Calculating skew', flush=True)
+        value        = delta_50pct(diagram)
+        data["skew"] = value
+        if limit_in_title(title):
+            is_passed = eval_limits(title, value)
+            if not is_passed:
+                data['limits'] = "failed"
+            elif 'limits' not in data:
+                data['limits'] = "passed"
+    return data
+
+def process_prop_delay(diagram, title):
+    data = OrderedDict()
+    if is_prop_delay(title):
+        print('Calculating prop delay', flush=True)
+        value              = delta_50pct(diagram)
+        data["prop delay"] = value
+        if limit_in_title(title):
+            is_passed = eval_limits(title, value)
+            if not is_passed:
+                data['limits'] = "failed"
+            elif 'limits' not in data:
+                data['limits'] = "passed"
+    return data
+
+def save_diagram_screenshot(path, diagram, title):
+    path.mkdirs()
+    filename = path.file_path(title, ".png")
+    print(title, flush=True)
+    diagram.save_screenshot_locally(filename, "PNG")
+    with open(filename, 'rb') as f:
+        return base64.b64encode(f.read()).decode()
+
+def diagram_limits_from_data(diagram_data):
+    print("Evaluating {} limits".format(diagram_data['title']), flush=True)
+    for t_name in diagram_data['traces']:
+        trace_data = diagram_data['traces'][t_name]
+        if 'limits' in trace_data:
+            if trace_data['limits'] == 'failed':
+                diagram_data['limits'] = 'failed'
+            elif trace_data['limits'] and not diagram_data['limits']:
+                diagram_data['limits'] = trace_data['limits']
+    return diagram_data
+
 def process_diagram(path, diagram, settings):
     # title, path
     data = OrderedDict()
@@ -98,47 +145,20 @@ def process_diagram(path, diagram, settings):
     if not title:
         title = "Diagram {0}".format(diagram.index)
     path.cd_diagram(strip_limit_from_title(title))
+    data["title"] = strip_limit_from_title(title)
+    print(data['title'], flush=True)
 
     # Diagram macros
-    if not settings['disable markers']:
-        if is_skew(title):
-            value        = delta_50pct(diagram)
-            data["skew"] = value
-            if limit_in_title(title):
-                is_passed = eval_limits(title, value)
-                if not is_passed:
-                    data['limits'] = "failed"
-                elif 'limits' not in data:
-                    data['limits'] = "passed"
-        if is_prop_delay(title):
-            value              = delta_50pct(diagram)
-            data["prop delay"] = value
-            if limit_in_title(title):
-                is_passed = eval_limits(title, value)
-                if not is_passed:
-                    data['limits'] = "failed"
-                elif 'limits' not in data:
-                    data['limits'] = "passed"
+    if not settings['save']['disable markers']:
+        data.update(process_skew(diagram, title))
+        data.update(process_prop_delay(diagram, title))
 
-    # Return if nothing to save
-    if not settings.is_save_diagrams():
-        return data
-    
     # Screenshot
     if not settings['save']['disable screenshots']:
-        path.mkdirs()
-        filename = path.file_path(title, ".png")
-        print(title, flush=True)
-        diagram.save_screenshot_locally(filename, "PNG")
-        with open(filename, 'rb') as f:
-            data['screenshot'] = base64.b64encode(f.read()).decode()
+        data['screenshot'] = save_diagram_screenshot(path, diagram, title)
 
     # Limits
-    data["title"] = strip_limit_from_title(title)
-    if diagram.is_limits():
-        if not diagram.passed:
-            data["limits"] = "failed"
-        elif not "limits" in data:
-            data["limits"] = "passed"
+    # ... do this from data after processing traces
+    # This saves a lot of time
 
     return data

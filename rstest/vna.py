@@ -10,9 +10,11 @@ def process_vna(path, vna, settings):
     if not settings['save']['disable screenshots']:
         path.mkdirs()
         filename = path.file_path("screenshot", ".png")
-        print("vna screenshot", flush=True)
+        print("Screenshot          ", end='', flush=True)
         vna.save_screenshot_locally(filename, "PNG")
+        print("✓", flush=True)
     if not settings['save']['disable global limit'] and vna.is_limits():
+        print("Global limit        ", end='', flush=True)
         path.cd_vna_limits()
         path.mkdirs()
         if vna.passed:
@@ -21,4 +23,5 @@ def process_vna(path, vna, settings):
         else:
             data["limits"] = "failed"
             touch(path.file_path("", "__FAILED__"))
+        print("✓", flush=True)
     return data

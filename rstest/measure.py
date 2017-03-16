@@ -41,8 +41,7 @@ def measure(vna, serial_no, settings):
 
     # VNA screenshot,
     # global pass/fail
-    result = process_vna(path, vna, settings);
-    data.update(result)
+    data.update(process_vna(path, vna, settings))
 
     # Diagram screenshots,
     # trace csv,
@@ -54,18 +53,19 @@ def measure(vna, serial_no, settings):
         diagrams = vna.diagrams
         for d in diagrams:
             diagram = vna.diagram(d)
-            title   = diagram.title
-            if not title:
+            title   = strip_limit_from_title(diagram.title)
+            if title:
+                print("Diagram {0}".format(title), flush=True)
+            else:
                 title = "Diagram {0}".format(diagram.index)
-            title   = strip_limit_from_title(title)
-            print("Processing {0}".format(title), flush=True)
+                print(title, flush=True)
             diagram_data = data['diagrams'][title] \
                          = process_diagram(path, diagram, settings)
             traces_data  = diagram_data['traces']  \
                          = OrderedDict()
             if settings.is_save_traces():
                 for t in diagram.traces:
-                    print("Processing {0}".format(t), flush=True)
+                    print("  Trace {0}".format(t), flush=True)
                     trace      = diagram._vna.trace(t)
                     name       = trace.name
                     traces_data[name] = process_trace(path, trace, settings)
@@ -74,10 +74,11 @@ def measure(vna, serial_no, settings):
 
     # Create summary
     if not settings['save']['disable html summary']:
+        print("HTML                ", end='', flush=True)
         path.cd_summary()
         path.mkdirs()
-        print("summary.html", flush=True)
         generate_html(path.file_path('summary', '.html'), serial_no, settings, data)
+        print("✓", flush=True)
 
     # Remove screenshot binary from data
     if not settings['save']['disable screenshots']:
@@ -85,17 +86,17 @@ def measure(vna, serial_no, settings):
 
     # Write data
     if not settings['save']['disable results json']:
-        print("data.json", flush=True)
+        print("JSON                ", end='', flush=True)
         path.cd_json()
         path.mkdirs()
         with open(path.file_path('summary', '.json'), 'w') as f:
             json.dump(data, f)
+        print("✓", flush=True)
     if settings['save']['enable project csv']:
-        print("cumulative.csv", flush=True)
+        print("CSV                 ", end='', flush=True)
         filename = path.root_path / "cumulative.csv"
         filename = str(filename)
         generate_csv(filename, serial_no, data)
-
-
+        print("✓", flush=True)
 
     return data

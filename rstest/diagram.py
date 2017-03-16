@@ -94,41 +94,47 @@ def eval_limits(title, value):
 def process_skew(diagram, title):
     data = OrderedDict()
     if is_skew(title):
-        print('Calculating skew', flush=True)
+        print("  skew              ", end='', flush=True)
         value        = delta_50pct(diagram)
         data["skew"] = value
+        print("✓", flush=True)
         if limit_in_title(title):
+            print("  skew limit        ", end='', flush=True)
             is_passed = eval_limits(title, value)
             if not is_passed:
                 data['limits'] = "failed"
             elif 'limits' not in data:
                 data['limits'] = "passed"
+            print("✓", flush=True)
     return data
 
 def process_prop_delay(diagram, title):
     data = OrderedDict()
     if is_prop_delay(title):
-        print('Calculating prop delay', flush=True)
+        print("  prop delay        ", end='', flush=True)
         value              = delta_50pct(diagram)
         data["prop delay"] = value
+        print("✓", flush=True)
         if limit_in_title(title):
+            print("  prop delay limit  ", end='', flush=True)
             is_passed = eval_limits(title, value)
             if not is_passed:
                 data['limits'] = "failed"
             elif 'limits' not in data:
                 data['limits'] = "passed"
+            print("✓", flush=True)
     return data
 
 def save_diagram_screenshot(path, diagram, title):
+    print("  screenshot        ", end='', flush=True)
     path.mkdirs()
     filename = path.file_path(title, ".png")
-    print(title, flush=True)
     diagram.save_screenshot_locally(filename, "PNG")
     with open(filename, 'rb') as f:
+        print("✓", flush=True)
         return base64.b64encode(f.read()).decode()
 
 def diagram_limits_from_data(diagram_data):
-    print("Evaluating {} limits".format(diagram_data['title']), flush=True)
     for t_name in diagram_data['traces']:
         trace_data = diagram_data['traces'][t_name]
         if 'limits' in trace_data:
@@ -146,7 +152,6 @@ def process_diagram(path, diagram, settings):
         title = "Diagram {0}".format(diagram.index)
     path.cd_diagram(strip_limit_from_title(title))
     data["title"] = strip_limit_from_title(title)
-    print(data['title'], flush=True)
 
     # Diagram macros
     is_markers = not settings['save']['disable markers']

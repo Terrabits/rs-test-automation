@@ -37,7 +37,7 @@ class Settings(defaultdict):
 		if settings:
 			self.update(to_none_default(settings))
 		self['dut']        = self['dut'] or 'DUT'
-		self['display']    = self['display'] or 'default'		
+		self['display']    = self['display'] or 'default'
 		self['instrument'] = self['instrument'] or none_default_dict.copy()
 		instr = self['instrument']
 		instr['connection type'] = instr['connection type'] or 'tcpip'
@@ -56,7 +56,7 @@ class Settings(defaultdict):
 		keys = ['disable screenshots', 'disable per-test limits']
 		return nand_keys(keys, self["save"])
 	def is_save_traces(self):
-		keys = ['disable trace csv files', 'disable markers']
+		keys = ['disable trace csv files', 'disable markers', 'disable per-test limits']
 		return nand_keys(keys, self["save"])
 
 	def copy(self):
@@ -65,5 +65,3 @@ class Settings(defaultdict):
 		return a_copy
 
 default = Settings()
-
-

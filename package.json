@@ -2,7 +2,7 @@
   "name": "rs-test-automation",
   "productName": "R&S Test Automation",
   "description": "Performs all measurements and captures relevant diagrams and data",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Nick Lalic",
   "copyright": "© 2017 Rohde & Schwarz North America",
   "homepage": "https://vna.rs-us.net",

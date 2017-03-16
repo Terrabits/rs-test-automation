@@ -149,7 +149,9 @@ def process_diagram(path, diagram, settings):
     print(data['title'], flush=True)
 
     # Diagram macros
-    if not settings['save']['disable markers']:
+    is_markers = not settings['save']['disable markers']
+    is_limit   = not settings['save']['disable per-test limits'] and limit_in_title(title)
+    if is_markers or is_limit:
         data.update(process_skew(diagram, title))
         data.update(process_prop_delay(diagram, title))
 

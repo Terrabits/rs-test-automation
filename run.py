@@ -15,6 +15,7 @@ from   rstest.settings import default as default_settings
 # python
 import json
 import sys
+import codecs
 
 def connect_to_vna(address):
 	vna = Vna()

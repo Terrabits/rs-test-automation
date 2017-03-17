@@ -7,7 +7,11 @@
   <meta name="author" content="Nick Lalic">
   <link rel="icon" href="../../favicon.ico">
 
-  <title>R&amp;S Test Automation </title>
+  <% require 'json' %>
+  <% version = JSON.parse(File.read('package.json'))['version'] %>
+  <title>
+  R&amp;S Test Automation <%= version %>
+  </title>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

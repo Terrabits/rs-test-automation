@@ -48,8 +48,8 @@ gulp.task('restart', ['rebuild'],
 	shell.task(['npm start'])
 );
 gulp.task('repack', ['rebuild'],
-	shell.task(['npm pack'])
+	shell.task(['npm run pack'])
 );
 gulp.task('redist', ['rebuild'],
-	shell.task(['npm dist'])
+	shell.task(['npm run dist'])
 );

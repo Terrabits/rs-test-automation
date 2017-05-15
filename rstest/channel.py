@@ -1,4 +1,4 @@
-from   rstest.general import make_path_safe
+from   rstest.general import make_path_safe, print_check
 import os
 
 def process_channel(path, channel, ports, settings):
@@ -6,7 +6,7 @@ def process_channel(path, channel, ports, settings):
     if not settings.is_save_channels():
         print("  sweep             ", end='', flush=True)
         channel.sweep()
-        print("✓", flush=True)
+        print_check()
         return
     ch_name  = channel.name
     path.cd_channel(ch_name)
@@ -15,4 +15,4 @@ def process_channel(path, channel, ports, settings):
     filename = path.file_path(ch_name, file_ext)
     print("  touchstone        ", end='', flush=True)
     channel.save_measurement_locally(filename, ports)
-    print("✓", flush=True)
+    print_check()

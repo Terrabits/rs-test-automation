@@ -1,5 +1,5 @@
 from collections  import OrderedDict
-from rstest.general import touch
+from rstest.general import touch, print_check
 
 def process_vna(path, vna, settings):
     data = OrderedDict()
@@ -12,7 +12,7 @@ def process_vna(path, vna, settings):
         filename = path.file_path("screenshot", ".png")
         print("Screenshot          ", end='', flush=True)
         vna.save_screenshot_locally(filename, "PNG")
-        print("✓", flush=True)
+        print_check()
     if not settings['save']['disable global limit'] and vna.is_limits():
         print("Global limit        ", end='', flush=True)
         path.cd_vna_limits()
@@ -23,5 +23,5 @@ def process_vna(path, vna, settings):
         else:
             data["limits"] = "failed"
             touch(path.file_path("", "__FAILED__"))
-        print("✓", flush=True)
+        print_check()
     return data

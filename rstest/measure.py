@@ -1,6 +1,6 @@
 from   rstest.channel    import process_channel
 from   rstest.diagram    import process_diagram, diagram_limits_from_data, strip_limit_from_title
-from   rstest.general    import get_ports, timestamp
+from   rstest.general    import get_ports, timestamp, print_check
 from   rstest.html       import generate as generate_html
 from   rstest.projectcsv import generate as generate_csv
 from   rstest.trace      import process_trace
@@ -78,7 +78,7 @@ def measure(vna, serial_no, settings):
         path.cd_summary()
         path.mkdirs()
         generate_html(path.file_path('summary', '.html'), serial_no, settings, data)
-        print("✓", flush=True)
+        print_check()
 
     # Remove screenshot binary from data
     if not settings['save']['disable screenshots']:
@@ -91,12 +91,12 @@ def measure(vna, serial_no, settings):
         path.mkdirs()
         with open(path.file_path('summary', '.json'), 'w') as f:
             json.dump(data, f)
-        print("✓", flush=True)
+        print_check()
     if settings['save']['enable project csv']:
         print("CSV                 ", end='', flush=True)
         filename = path.root_path / "cumulative.csv"
         filename = str(filename)
         generate_csv(filename, serial_no, data)
-        print("✓", flush=True)
+        print_check()
 
     return data

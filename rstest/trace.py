@@ -1,6 +1,6 @@
 import os
 from   collections  import OrderedDict
-from   rstest.general import make_path_safe
+from   rstest.general import make_path_safe, print_check
 
 def process_trace(path, trace, settings):
     data = OrderedDict()
@@ -17,7 +17,7 @@ def process_trace(path, trace, settings):
             trace.save_data_locally(filename)
         else:
             trace.save_complex_data_locally(filename)
-        print("✓", flush=True)
+        print_check()
 
 
     # Limits
@@ -28,7 +28,7 @@ def process_trace(path, trace, settings):
                 data["limits"] = "passed"
             else:
                 data["limits"] = "failed"
-        print("✓", flush=True)
+        print_check()
 
     # Markers
     if not settings['save']['disable markers']:
@@ -46,5 +46,5 @@ def process_trace(path, trace, settings):
             y['units'] = str(trace.y_units())
             marker_data['x'] = x
             marker_data['y'] = y
-        print("✓", flush=True)
+        print_check()
     return data

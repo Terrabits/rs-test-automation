@@ -2,6 +2,7 @@ import datetime
 import os
 from   pathlib import Path
 import re
+import sys
 import time
 
 
@@ -42,3 +43,7 @@ def and_keys(keys, mydict):
     return result
 def nand_keys(keys, mydict):
     return not and_keys(keys, mydict)
+
+def print_check():
+    sys.stdout.buffer.write(bytes("✓", 'UTF-8'));
+    print("", flush=True)

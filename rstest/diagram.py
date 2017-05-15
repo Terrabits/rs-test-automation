@@ -1,4 +1,4 @@
-from   rstest.general import make_path_safe
+from   rstest.general import make_path_safe, print_check
 from   rstest.trace   import process_trace
 
 from   rohdeschwarz.general  import to_float
@@ -97,7 +97,7 @@ def process_skew(diagram, title):
         print("  skew              ", end='', flush=True)
         value        = delta_50pct(diagram)
         data["skew"] = value
-        print("✓", flush=True)
+        print_check()
         if limit_in_title(title):
             print("  skew limit        ", end='', flush=True)
             is_passed = eval_limits(title, value)
@@ -105,7 +105,7 @@ def process_skew(diagram, title):
                 data['limits'] = "failed"
             elif 'limits' not in data:
                 data['limits'] = "passed"
-            print("✓", flush=True)
+            print_check()
     return data
 
 def process_prop_delay(diagram, title):
@@ -114,7 +114,7 @@ def process_prop_delay(diagram, title):
         print("  prop delay        ", end='', flush=True)
         value              = delta_50pct(diagram)
         data["prop delay"] = value
-        print("✓", flush=True)
+        print_check()
         if limit_in_title(title):
             print("  prop delay limit  ", end='', flush=True)
             is_passed = eval_limits(title, value)
@@ -122,7 +122,7 @@ def process_prop_delay(diagram, title):
                 data['limits'] = "failed"
             elif 'limits' not in data:
                 data['limits'] = "passed"
-            print("✓", flush=True)
+            print_check()
     return data
 
 def save_diagram_screenshot(path, diagram, title):
@@ -131,7 +131,7 @@ def save_diagram_screenshot(path, diagram, title):
     filename = path.file_path(title, ".png")
     diagram.save_screenshot_locally(filename, "PNG")
     with open(filename, 'rb') as f:
-        print("✓", flush=True)
+        print_check()
         return base64.b64encode(f.read()).decode()
 
 def diagram_limits_from_data(diagram_data):

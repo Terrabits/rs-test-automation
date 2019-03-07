@@ -140,7 +140,7 @@ def diagram_limits_from_data(diagram_data):
         if 'limits' in trace_data:
             if trace_data['limits'] == 'failed':
                 diagram_data['limits'] = 'failed'
-            elif trace_data['limits'] and not diagram_data['limits']:
+            elif not 'limits' in diagram_data:
                 diagram_data['limits'] = trace_data['limits']
     return diagram_data
 

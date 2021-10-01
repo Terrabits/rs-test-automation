@@ -2,19 +2,32 @@ const electron      = require('electron')
 const app           = electron.app
 const BrowserWindow = electron.BrowserWindow
 
+// configure @eletron/remote
+const remote_main = require('@electron/remote/main');
+remote_main.initialize();
+
 const isDev  = require('electron-is-dev');
-const path   = require('path')
-const url    = require('url')
+const path   = require('path');
+const url    = require('url');
 // const Config = require('electron-config')
 // const config = new Config()
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, height: 1000})
+  mainWindow = new BrowserWindow({
+    width:  1200,
+    height: 1000,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true
+  }})
+
+  remote_main.enable(mainWindow.webContents);
 
   // Remove menu
   mainWindow.setMenu(null)
@@ -27,7 +40,6 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-
   if (isDev) {
     mainWindow.webContents.openDevTools({'mode': 'bottom'})
   }

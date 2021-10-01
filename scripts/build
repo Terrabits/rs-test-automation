@@ -10,4 +10,4 @@ cd "$ROOT_DIR"
 
 
 # build python (api)
-pyinstaller run.spec --distpath=app
+pyinstaller run.spec --noconfirm --distpath="app"

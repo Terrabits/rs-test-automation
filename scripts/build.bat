@@ -7,4 +7,4 @@ cd /d "%ROOT_DIR%"
 
 
 REM build python (api)
-pyinstaller run.spec --distpath=app
+pyinstaller run.spec --noconfirm --distpath="app"

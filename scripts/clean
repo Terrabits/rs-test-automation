@@ -10,5 +10,8 @@ cd "$ROOT_DIR"
 
 
 # clean
-rm -rf app build/run dist
+rm -rf app build dist
+
+# restore
+git checkout --quiet app build
 mkdir dist

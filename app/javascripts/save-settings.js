@@ -1,6 +1,7 @@
-const electron       = nodeRequire('electron');
-const showOpenDialog = electron.remote.dialog.showOpenDialog
-const browserWindow  = electron.remote.getCurrentWindow();
+const remote         = require('@electron/remote');
+const browserWindow  = remote.getCurrentWindow();
+const showOpenDialog = remote.dialog.showOpenDialog
+
 const os             = nodeRequire('os');
 const path           = nodeRequire('path');
 

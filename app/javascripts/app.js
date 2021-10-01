@@ -30,3 +30,4 @@ $('#disconnect-button').on('click', onDisconnectClicked)
 if (settings.instrument.address) {
   onConnectClicked();
 }
+;

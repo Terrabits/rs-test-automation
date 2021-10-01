@@ -7,9 +7,6 @@
 # Ignore bundler config
 /.bundle
 
-# Ignore the build directory
-/build
-
 # Ignore cache
 /.sass-cache
 /.cache
@@ -18,15 +15,15 @@
 .DS_Store
 
 # Node modules
-node_modules/
+/node_modules
 
 # test build, dist artifacts
-build/
-app/
-dist/
+/app
+/build
+/dist
 *.dmg
 *.app
 
 # Python
 *.pyc
-__pycache__/
+__pycache__
